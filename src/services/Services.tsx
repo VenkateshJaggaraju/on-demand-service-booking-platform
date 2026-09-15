@@ -1,6 +1,7 @@
     import React, { useEffect, useMemo, useState } from "react";
     import axios from "axios";
     import "./Services.css";
+import { Link } from "react-router";
 
     interface Service {
     id: number;
@@ -189,7 +190,10 @@
                     }}
                 >
                     View All Services
-                </button>
+                </button><br />
+                <Link to="/"><button>Back to Home</button></Link>
+                    
+                
                 </div>
             )}
             </div>

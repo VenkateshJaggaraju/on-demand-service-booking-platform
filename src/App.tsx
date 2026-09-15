@@ -6,6 +6,7 @@ import { Services } from "./services/Services";
 import {AdminLogin} from "./logins/admin/AdminLogin";
 import { CustomerLogin } from "./logins/customer/CustomerLogin";
 import { CustomerRegister } from "./logins/customer/CustomerRegister";
+import { PrivateRoute } from "./utils/PrivateRoute";
 
   
 const router=createBrowserRouter([
@@ -20,8 +21,12 @@ const router=createBrowserRouter([
     errorElement: <PageNotFoundException />,
   },
   {
-    path:"/services",
-    element:<Services/>,
+    path: "/services",
+    element: (
+      <PrivateRoute>
+        <Services />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/customer/login",

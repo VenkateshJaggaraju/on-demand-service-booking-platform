@@ -1,6 +1,7 @@
     import React, { useState } from "react";
     import "./HomePage.css";
     import { Link, useNavigate } from "react-router-dom";
+    import { isCustomerLoggedIn } from "./utils/auth"; // adjust path if utils/auth.ts lives elsewhere
 
     interface Service {
     id: number;
@@ -152,12 +153,7 @@
     ];
 
     const ArrowRightIcon = () => (
-    <svg
-        className="icon"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
+    <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -168,12 +164,7 @@
     );
 
     const SearchIcon = () => (
-    <svg
-        className="icon"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
+    <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -184,12 +175,7 @@
     );
 
     const LocationIcon = () => (
-    <svg
-        className="icon"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
+    <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -201,12 +187,7 @@
     );
 
     const CheckIcon = () => (
-    <svg
-        className="icon"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
+    <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -217,12 +198,7 @@
     );
 
     const MenuIcon = () => (
-    <svg
-        className="icon menu-icon"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
+    <svg className="icon menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -233,12 +209,7 @@
     );
 
     const CloseIcon = () => (
-    <svg
-        className="icon menu-icon"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
+    <svg className="icon menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -253,6 +224,8 @@
     const [location, setLocation] = useState("");
     const [serviceSearch, setServiceSearch] = useState("");
 
+    const navigate = useNavigate();
+
     const handleSearch = () => {
         console.log("Location:", location);
         console.log("Service:", serviceSearch);
@@ -262,7 +235,32 @@
         service.name.toLowerCase().includes(serviceSearch.toLowerCase())
     );
 
-    const navigate = useNavigate();
+    // Central place that decides where "Explore" / "Book Now" should go,
+    // based on whether the customer already has a valid token.
+    const handleServiceClick = async (service: Service) => {
+        const loggedIn = await isCustomerLoggedIn();
+
+        if (service.id === 8) {
+        // "More Services" -> Explore
+        if (loggedIn) {
+            navigate("/services");
+        } else {
+            navigate("/customer/login", {
+            state: { redirectTo: "/services" },
+            });
+        }
+        return;
+        }
+
+        // Regular service -> Book Now
+        if (loggedIn) {
+        navigate("/payment", { state: { serviceId: service.id } });
+        } else {
+        navigate("/customer/login", {
+            state: { redirectTo: "/payment", serviceId: service.id },
+        });
+        }
+    };
 
     return (
         <div className="home-page">
@@ -319,8 +317,12 @@
                 </a>
 
                 <div className="mobile-auth">
-                <Link to=""><button className="btn btn-outline">Login</button></Link>
-                <Link to=""><button className="btn btn-primary">Sign Up</button></Link>
+                <Link to="">
+                    <button className="btn btn-outline">Login</button>
+                </Link>
+                <Link to="">
+                    <button className="btn btn-primary">Sign Up</button>
+                </Link>
                 </div>
             </div>
             )}
@@ -472,26 +474,13 @@
                         Starting from <strong>{service.price}</strong>
                         </div>
                     )}
-                    {/* a <Link/> renders this particular page */}
+
                     <button
-                    className="book-button"
-                    onClick={() => {
-                        if (service.id === 8) {
-                        navigate("/customer/login", {
-                            state: { redirectTo: "/services" }
-                        });
-                        } else {
-                        navigate("/customer/login", {
-                            state: {
-                            redirectTo: "/payment",
-                            serviceId: service.id
-                            }
-                        });
-                        }
-                    }}
+                        className="book-button"
+                        onClick={() => handleServiceClick(service)}
                     >
-                    {service.id === 8 ? "Explore" : "Book Now"}
-                    <ArrowRightIcon />
+                        {service.id === 8 ? "Explore" : "Book Now"}
+                        <ArrowRightIcon />
                     </button>
                     </div>
                 ))}
@@ -610,9 +599,7 @@
                 <div className="testimonials-grid">
                 {testimonials.map((testimonial) => (
                     <div className="testimonial-card" key={testimonial.id}>
-                    <div className="stars">
-                        {"★".repeat(testimonial.rating)}
-                    </div>
+                    <div className="stars">{"★".repeat(testimonial.rating)}</div>
 
                     <p>"{testimonial.comment}"</p>
 
@@ -636,8 +623,8 @@
                 <h2>Need a service at your doorstep?</h2>
 
                 <p>
-                Find trusted professionals near you and book your service in just
-                a few clicks.
+                Find trusted professionals near you and book your service in
+                just a few clicks.
                 </p>
 
                 <button>
