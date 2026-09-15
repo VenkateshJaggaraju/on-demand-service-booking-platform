@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true) //Enable method-level security
 public class SecurityConfig {
 
     @Autowired
@@ -40,6 +40,7 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/",
+                                "/auth/validate",
                                 "/admin/register",
                                 "/admin/login",
                                 "/customer/register",
@@ -47,6 +48,7 @@ public class SecurityConfig {
                                 "/serviceProvider/register",
                                 "/serviceProvider/login"
                         ).permitAll()
+
 
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")
