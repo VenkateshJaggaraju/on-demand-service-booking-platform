@@ -1,34 +1,34 @@
-    import React, { useState } from "react";
-    import "./HomePage.css";
-    import { Link, useNavigate } from "react-router-dom";
-    import { isCustomerLoggedIn } from "./utils/auth"; // adjust path if utils/auth.ts lives elsewhere
+import React, { useState } from "react";
+import "./HomePage.css";
+import { Link, useNavigate } from "react-router-dom";
+import { isCustomerLoggedIn, isServiceProviderLoggedIn } from "./utils/Auth"; // adjust path to match your project
 
-    interface Service {
+interface Service {
     id: number;
     name: string;
     description: string;
     price: string;
     icon: string;
     color: string;
-    }
+}
 
-    interface Step {
+interface Step {
     id: number;
     title: string;
     description: string;
     icon: string;
-    }
+}
 
-    interface Testimonial {
+interface Testimonial {
     id: number;
     name: string;
     location: string;
     rating: number;
     comment: string;
     avatar: string;
-    }
+}
 
-    const services: Service[] = [
+const services: Service[] = [
     {
         id: 1,
         name: "Home Cleaning",
@@ -93,9 +93,9 @@
         icon: "•••",
         color: "service-green",
     },
-    ];
+];
 
-    const steps: Step[] = [
+const steps: Step[] = [
     {
         id: 1,
         title: "Search Service",
@@ -120,9 +120,9 @@
         description: "Get your service completed with satisfaction.",
         icon: "✓",
     },
-    ];
+];
 
-    const testimonials: Testimonial[] = [
+const testimonials: Testimonial[] = [
     {
         id: 1,
         name: "Rahul Sharma",
@@ -161,9 +161,9 @@
         d="M13 7l5 5m0 0l-5 5m5-5H6"
         />
     </svg>
-    );
+);
 
-    const SearchIcon = () => (
+const SearchIcon = () => (
     <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
@@ -172,9 +172,9 @@
         d="M21 21l-4.35-4.35m2.35-5.65a8 8 0 11-16 0 8 8 0 0116 0z"
         />
     </svg>
-    );
+);
 
-    const LocationIcon = () => (
+const LocationIcon = () => (
     <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
@@ -184,9 +184,9 @@
         />
         <circle cx="12" cy="9" r="2.5" />
     </svg>
-    );
+);
 
-    const CheckIcon = () => (
+const CheckIcon = () => (
     <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
         strokeLinecap="round"
@@ -195,10 +195,15 @@
         d="M5 13l4 4L19 7"
         />
     </svg>
-    );
+);
 
-    const MenuIcon = () => (
-    <svg className="icon menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+const MenuIcon = () => (
+    <svg
+        className="icon menu-icon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
         <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -206,10 +211,15 @@
         d="M4 6h16M4 12h16M4 18h16"
         />
     </svg>
-    );
+);
 
-    const CloseIcon = () => (
-    <svg className="icon menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+const CloseIcon = () => (
+    <svg
+        className="icon menu-icon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
         <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -217,9 +227,9 @@
         d="M6 6l12 12M18 6L6 18"
         />
     </svg>
-    );
+);
 
-    export const HomePage: React.FC = () => {
+export const HomePage: React.FC = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
     const [location, setLocation] = useState("");
     const [serviceSearch, setServiceSearch] = useState("");
@@ -232,32 +242,45 @@
     };
 
     const filteredServices = services.filter((service) =>
-        service.name.toLowerCase().includes(serviceSearch.toLowerCase())
+        service.name.toLowerCase().includes(serviceSearch.toLowerCase()),
     );
 
-    // Central place that decides where "Explore" / "Book Now" should go,
-    // based on whether the customer already has a valid token.
+    // Decides where "Explore" / "Book Now" should go, based on whether the
+    // customer already has a valid token.
     const handleServiceClick = async (service: Service) => {
         const loggedIn = await isCustomerLoggedIn();
 
         if (service.id === 8) {
-        // "More Services" -> Explore
         if (loggedIn) {
             navigate("/services");
         } else {
-            navigate("/customer/login", {
-            state: { redirectTo: "/services" },
-            });
+            navigate("/customer/login", { state: { redirectTo: "/services" } });
         }
         return;
         }
 
-        // Regular service -> Book Now
         if (loggedIn) {
         navigate("/payment", { state: { serviceId: service.id } });
         } else {
         navigate("/customer/login", {
             state: { redirectTo: "/payment", serviceId: service.id },
+        });
+        }
+    };
+
+    // Same pattern for the provider flow: check the token before deciding
+    // whether to send them to login or straight to the provider dashboard.
+    // Fixes: "Become a Provider" always redirected to login even after a
+    // successful service-provider login, because the link never checked
+    // auth state at all — it just hard-navigated to /service-provider/login.
+    const handleBecomeProviderClick = async () => {
+        const loggedIn = await isServiceProviderLoggedIn();
+
+        if (loggedIn) {
+        navigate("/service-provider/provide-services");
+        } else {
+        navigate("/service-provider/login", {
+            state: { redirectTo: "/service-provider/provide-services" },
         });
         }
     };
@@ -284,13 +307,25 @@
                 </a>
                 <Link to="/services">Services</Link>
                 <Link to="">How It Works</Link>
-                <Link to="">Become a Provider</Link>
+                <a
+                href="#provider"
+                onClick={(e) => {
+                    e.preventDefault();
+                    handleBecomeProviderClick();
+                }}
+                >
+                Become a Provider
+                </a>
                 <Link to="">About Us</Link>
             </nav>
 
             <div className="auth-buttons">
+                <Link to="/customer/login">
                 <button className="btn btn-outline">Login</button>
+                </Link>
+                <Link to="/customer/register">
                 <button className="btn btn-primary">Sign Up</button>
+                </Link>
             </div>
 
             <button
@@ -312,15 +347,22 @@
                 <a href="#how-it-works" onClick={() => setMobileMenu(false)}>
                 How It Works
                 </a>
-                <a href="#provider" onClick={() => setMobileMenu(false)}>
+                <a
+                href="#provider"
+                onClick={(e) => {
+                    e.preventDefault();
+                    setMobileMenu(false);
+                    handleBecomeProviderClick();
+                }}
+                >
                 Become a Provider
                 </a>
 
                 <div className="mobile-auth">
-                <Link to="">
+                <Link to="/customer/login">
                     <button className="btn btn-outline">Login</button>
                 </Link>
-                <Link to="">
+                <Link to="/customer/register">
                     <button className="btn btn-primary">Sign Up</button>
                 </Link>
                 </div>
@@ -573,7 +615,10 @@
                     </div>
                     </div>
 
-                    <button className="provider-button">
+                    <button
+                    className="provider-button"
+                    onClick={handleBecomeProviderClick}
+                    >
                     Become a Provider
                     <ArrowRightIcon />
                     </button>
@@ -623,8 +668,8 @@
                 <h2>Need a service at your doorstep?</h2>
 
                 <p>
-                Find trusted professionals near you and book your service in
-                just a few clicks.
+                Find trusted professionals near you and book your service in just
+                a few clicks.
                 </p>
 
                 <button>
@@ -686,4 +731,4 @@
         </footer>
         </div>
     );
-    };
+};

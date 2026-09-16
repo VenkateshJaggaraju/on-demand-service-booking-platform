@@ -1,0 +1,37 @@
+    @import "tailwindcss";
+
+    .provide-services-page {
+    @apply min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-white to-blue-100 px-6;
+    }
+
+    .provide-services-card {
+    @apply w-full max-w-xl rounded-3xl bg-white px-8 py-12 text-center shadow-2xl border border-slate-200;
+    }
+
+    .provide-services-icon {
+    @apply mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-100 text-4xl shadow-sm;
+    }
+
+    .provide-services-title {
+    @apply mb-4 text-3xl font-bold text-slate-800;
+    }
+
+    .provide-services-description {
+    @apply mx-auto mb-8 max-w-md text-base leading-7 text-slate-500;
+    }
+
+    .provide-services-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300;
+    }
+
+    .provide-services-button:hover {
+    @apply -translate-y-1 bg-blue-700 shadow-xl;
+    }
+
+    .provide-services-button:active {
+    @apply translate-y-0;
+    }
+
+    .provide-services-button span {
+    @apply text-2xl leading-none;
+    }

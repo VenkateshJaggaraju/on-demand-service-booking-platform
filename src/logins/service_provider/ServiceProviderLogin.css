@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+.service-provider-login-page {
+        @apply min-h-screen flex items-center justify-center bg-gray-100 px-5;
+}
+
+.service-provider-login-card {
+        @apply w-full max-w-md bg-white p-10 rounded-2xl shadow-xl;
+}
+
+.service-provider-login-title {
+        @apply text-3xl font-bold text-center text-gray-800;
+}
+
+.service-provider-login-subtitle {
+        @apply mt-2 mb-8 text-center text-gray-500;
+}
+
+.service-provider-login-error {
+        @apply mb-5 p-3 rounded-lg bg-red-100 text-red-700 text-center;
+}
+
+.service-provider-login-field {
+        @apply mb-5;
+}
+
+.service-provider-login-field label {
+@apply block mb-2 font-semibold text-gray-700;
+}
+
+.service-provider-login-field input {
+@apply w-full px-4 py-3 border border-gray-300 rounded-lg outline-none text-gray-800;
+}
+
+.service-provider-login-field input:focus {
+@apply border-blue-500 ring-2 ring-blue-100;
+}
+
+.service-provider-login-button {
+@apply w-full py-3 rounded-lg bg-blue-600 text-white font-semibold
+        transition duration-200;
+}
+
+.service-provider-login-button:hover {
+@apply bg-blue-700;
+}
+
+.service-provider-login-button:disabled {
+@apply bg-blue-300 cursor-not-allowed;
+}
+
+.service-provider-login-signup {
+@apply mt-6 text-center;
+}
+
+.service-provider-login-signup p {
+@apply mb-2 text-gray-500;
+}
+
+.service-provider-login-signup a {
+@apply text-blue-600 font-semibold;
+}
+
+.service-provider-login-signup a:hover {
+@apply underline;
+}

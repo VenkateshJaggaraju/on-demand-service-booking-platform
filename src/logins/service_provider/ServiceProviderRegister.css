@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+.service-provider-register-page {
+@apply min-h-screen flex items-center justify-center bg-gray-100 px-5 py-10;
+}
+
+.service-provider-register-card {
+@apply w-full max-w-lg bg-white p-10 rounded-2xl shadow-xl;
+}
+
+.service-provider-register-title {
+@apply text-3xl font-bold text-center text-gray-800;
+}
+
+.service-provider-register-subtitle {
+@apply mt-2 mb-8 text-center text-gray-500;
+}
+
+.service-provider-register-error {
+@apply mb-5 p-3 rounded-lg bg-red-100 text-red-700 text-center;
+}
+
+.service-provider-register-success {
+@apply mb-5 p-3 rounded-lg bg-green-100 text-green-700 text-center;
+}
+
+.service-provider-register-field {
+@apply mb-5;
+}
+
+.service-provider-register-field label {
+@apply block mb-2 font-semibold text-gray-700;
+}
+
+.service-provider-register-field input {
+@apply w-full px-4 py-3 border border-gray-300 rounded-lg
+        outline-none text-gray-800;
+}
+
+.service-provider-register-field input:focus {
+@apply border-blue-500 ring-2 ring-blue-100;
+}
+
+.service-provider-register-button {
+@apply w-full py-3 rounded-lg bg-blue-600 text-white
+        font-semibold transition duration-200;
+}
+
+.service-provider-register-button:hover {
+@apply bg-blue-700;
+}
+
+.service-provider-register-button:disabled {
+@apply bg-blue-300 cursor-not-allowed;
+}
+
+.service-provider-register-login {
+@apply mt-6 text-center;
+}
+
+.service-provider-register-login p {
+@apply mb-2 text-gray-500;
+}
+
+.service-provider-register-login a {
+@apply text-blue-600 font-semibold;
+}
+
+.service-provider-register-login a:hover {
+@apply underline;
+}
