@@ -43,6 +43,10 @@ import java.util.Map;
  * check login status before rendering/redirecting
  */
 
+/*
+ * Note:
+ * Only one user can access the application at a time
+ */
 
 @RestController
 @RequestMapping("/auth")

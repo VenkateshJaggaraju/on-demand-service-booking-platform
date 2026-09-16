@@ -1,10 +1,9 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.controller;
 
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Admin;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceRequestDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceResponseDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.ServiceProvider;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Services;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.AdminRepository;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceProviderRepository;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.ServiceProviderService;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.UserService;
@@ -37,12 +36,12 @@ public class ServiceProviderController {
     }
 
     @PostMapping("/service")
-    public List<Services> addService(@RequestBody Services service) {
-        return serviceProviderService.addService(service);
+    public ServiceResponseDTO addService(@RequestBody ServiceRequestDTO requestDTO) {
+        return serviceProviderService.addService(requestDTO);
     }
 
     @GetMapping("/services")
-    public List<Services> getServices() {
+    public List<ServiceResponseDTO> getServices() {
         return serviceProviderService.getServices();
     }
 
