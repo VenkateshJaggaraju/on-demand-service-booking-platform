@@ -45,8 +45,8 @@ public class SecurityConfig {
                                 "/admin/login",
                                 "/customer/register",
                                 "/customer/login",
-                                "/serviceProvider/register",
-                                "/serviceProvider/login"
+                                "/service-provider/register",
+                                "/service-provider/login"
                         ).permitAll()
 
 
@@ -56,7 +56,7 @@ public class SecurityConfig {
                         .requestMatchers("/customer/**")
                         .hasRole("CUSTOMER")
 
-                        .requestMatchers("/serviceProvider/**")
+                        .requestMatchers("/service-provider/**")
                         .hasRole("SERVICEPROVIDER")
 
                         .requestMatchers("/profile/**")
