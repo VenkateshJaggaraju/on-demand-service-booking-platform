@@ -5,7 +5,7 @@
     const navigate = useNavigate();
 
     const handleProvideService = () => {
-        navigate("/service-provider/provide-services");
+        navigate("/service-provider/add");
     };
 
     return (
@@ -33,7 +33,7 @@
             <span>＋</span>
             Provide Service
             </button><br />
-            
+
             <button onClick={() => navigate("/")}>
             Back to Home
             </button>

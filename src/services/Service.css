@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+.service-page {
+  @apply min-h-screen bg-slate-50 px-6 py-10;
+}
+
+.service-header {
+  @apply mx-auto mb-10 flex max-w-7xl items-end justify-between gap-6;
+}
+
+.service-header-label {
+  @apply mb-2 text-sm font-semibold uppercase tracking-widest text-blue-600;
+}
+
+.service-title {
+  @apply text-4xl font-bold tracking-tight text-slate-900;
+}
+
+.service-subtitle {
+  @apply mt-2 text-base text-slate-500;
+}
+
+.service-count {
+  @apply rounded-2xl bg-white px-6 py-4 text-center shadow-sm ring-1 ring-slate-200;
+}
+
+.service-count span {
+  @apply block text-3xl font-bold text-blue-600;
+}
+
+.service-count p {
+  @apply mt-1 text-sm text-slate-500;
+}
+
+/* Grid */
+
+.service-grid {
+  @apply mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3;
+}
+
+/* Card */
+
+.service-card {
+  @apply rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300;
+}
+
+.service-card:hover {
+  @apply -translate-y-1 shadow-xl;
+}
+
+/* Icon */
+
+.service-icon {
+  @apply mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-3xl;
+}
+
+/* Category */
+
+.service-category {
+  @apply inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-600;
+}
+
+/* Title */
+
+.service-card-title {
+  @apply mt-4 text-xl font-bold text-slate-900;
+}
+
+.service-description {
+  @apply mt-2 min-h-12 text-sm leading-6 text-slate-500;
+}
+
+/* Price */
+
+.service-price-section {
+  @apply mt-6 flex items-center justify-between border-t border-slate-100 pt-5;
+}
+
+.service-price-label {
+  @apply text-xs font-medium text-slate-400;
+}
+
+.service-price {
+  @apply mt-1 text-2xl font-bold text-blue-600;
+}
+
+.service-base-price {
+  @apply text-right;
+}
+
+.service-base-price p {
+  @apply text-xs text-slate-400;
+}
+
+.service-base-price span {
+  @apply mt-1 block text-sm font-medium text-slate-500 line-through;
+}
+
+/* Bookings */
+
+.service-bookings {
+  @apply mt-5 flex items-center gap-3 rounded-2xl bg-slate-50 p-4;
+}
+
+.service-booking-icon {
+  @apply flex h-10 w-10 items-center justify-center rounded-xl bg-white text-lg shadow-sm;
+}
+
+.service-booking-label {
+  @apply text-xs text-slate-400;
+}
+
+.service-booking-count {
+  @apply mt-0.5 text-lg font-bold text-slate-800;
+}
+
+/* Loading */
+
+.service-loading {
+  @apply flex min-h-[70vh] flex-col items-center justify-center text-slate-500;
+}
+
+.service-spinner {
+  @apply mb-4 h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600;
+}
+
+/* Error */
+
+.service-error {
+  @apply mx-auto mt-20 max-w-md rounded-3xl bg-white p-10 text-center shadow-lg ring-1 ring-slate-200;
+}
+
+.service-error-icon {
+  @apply mb-4 text-4xl;
+}
+
+.service-error h2 {
+  @apply text-xl font-bold text-slate-900;
+}
+
+.service-error p {
+  @apply mt-2 text-sm text-slate-500;
+}
+
+/* Empty */
+
+.service-empty {
+  @apply mx-auto mt-20 max-w-lg rounded-3xl bg-white p-10 text-center shadow-sm ring-1 ring-slate-200;
+}
+
+.service-empty-icon {
+  @apply mb-4 text-5xl;
+}
+
+.service-empty h2 {
+  @apply text-2xl font-bold text-slate-900;
+}
+
+.service-empty p {
+  @apply mt-2 leading-6 text-slate-500;
+}
+
+/* Responsive */
+
+@media (max-width: 640px) {
+  .service-page {
+    @apply px-4 py-6;
+  }
+
+  .service-header {
+    @apply items-start;
+  }
+
+  .service-title {
+    @apply text-3xl;
+  }
+
+  .service-count {
+    @apply px-4 py-3;
+  }
+
+  .service-count span {
+    @apply text-2xl;
+  }
+}

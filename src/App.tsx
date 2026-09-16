@@ -3,12 +3,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PageNotFoundException } from "./exceptions/PageNotFoundException";
 import { HomePage } from "./HomePage";
 import { Services } from "./services/Services";
-import { AdminLogin } from "./logins/admin/AdminLogin";
-import { CustomerLogin } from "./logins/customer/CustomerLogin";
-import { CustomerRegister } from "./logins/customer/CustomerRegister";
+import { Service } from "./services/Service";
+import { AdminLogin } from "./admin/AdminLogin";
+import { CustomerLogin } from "./customer/CustomerLogin";
+import { CustomerRegister } from "./customer/CustomerRegister";
 import { PrivateRoute } from "./utils/PrivateRoute";
-import { ServiceProviderRegister } from "./logins/service_provider/ServiceProviderRegister";
-import { ServiceProviderLogin } from "./logins/service_provider/ServiceProviderLogin";
+import { ServiceProviderRegister } from "./service-provider/ServiceProviderRegister";
+import { ServiceProviderLogin } from "./service-provider/ServiceProviderLogin";
 import { ProvideServices } from "./services/ProvideServices";
 
 const router = createBrowserRouter([
@@ -61,8 +62,17 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "add",
+        element: (
+          <PrivateRoute role="SERVICEPROVIDER">
+            <Service />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
+
 
   {
     path: "/services",
