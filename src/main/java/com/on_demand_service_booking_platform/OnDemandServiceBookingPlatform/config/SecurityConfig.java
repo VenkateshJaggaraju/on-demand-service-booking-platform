@@ -63,7 +63,15 @@ public class SecurityConfig {
 
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/customer/**").hasRole("CUSTOMER")
+
+                        // Browsing services is public — anyone (including a
+                        // not-logged-in customer) can view what's on offer.
+                        .requestMatchers(HttpMethod.GET, "/service-provider/services").permitAll()
+
+                        // Everything else under /service-provider/** — adding a
+                        // service, etc. — still requires the SERVICEPROVIDER role.
                         .requestMatchers("/service-provider/**").hasRole("SERVICEPROVIDER")
+
                         .requestMatchers("/profile/**").hasAnyRole("ADMIN", "CUSTOMER", "SERVICEPROVIDER")
 
                         .anyRequest().authenticated()
