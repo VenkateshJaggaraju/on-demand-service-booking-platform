@@ -1,5 +1,6 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.controller;
 
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.AdminDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Admin;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Users;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.AdminRepository;
@@ -18,18 +19,21 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private UserService userService;
-    @Autowired
-    private AdminRepository adminRepository;
+    private AdminService adminService;
 
     @PostMapping("/register")
-    public Admin register(@RequestBody Admin admin) {
-        return userService.register(admin, adminRepository);
+    public AdminDTO register(@RequestBody AdminDTO dto) {
+        return adminService.register(dto);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody Admin admin) {
-        return userService.verify(admin, adminRepository);
+    public String login(@RequestBody AdminDTO dto) {
+        return adminService.login(dto);
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        return adminService.logout(request);
     }
 
 

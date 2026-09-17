@@ -2,11 +2,16 @@ package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.se
 
 
 
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceProviderDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.ServiceProvider;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.ServiceMapper;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceRequestDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceResponseDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Services;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.ServiceProviderMapper;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceProviderRepository;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +28,14 @@ public class ServiceProviderService {
     private ServiceRepository serviceRepository;
 
     @Autowired
+    private UserService userService;
+    @Autowired
+    private ServiceProviderRepository serviceProviderRepository;
+
+    @Autowired
     private ServiceMapper serviceMapper;
+    @Autowired
+    private ServiceProviderMapper serviceProviderMapper;
 
     public ServiceResponseDTO addService(ServiceRequestDTO requestDTO) {
         Services service = serviceMapper.toEntity(requestDTO);
@@ -59,5 +71,30 @@ public class ServiceProviderService {
         serviceMapper.withDisplayPrice(result.getContent());
 
         return result;
+    }
+
+    public ServiceProviderDTO register(ServiceProviderDTO dto) {
+        ServiceProvider serviceProvider = serviceProviderMapper.toEntity(dto);
+
+        ServiceProvider savedServiceProvider =
+                userService.register(
+                        serviceProvider,
+                        serviceProviderRepository
+                );
+
+        return serviceProviderMapper.toDTO(savedServiceProvider);
+    }
+
+    public String login(ServiceProviderDTO dto) {
+        ServiceProvider serviceProvider = serviceProviderMapper.toEntity(dto);
+
+        return userService.verify(
+                serviceProvider,
+                serviceProviderRepository
+        );
+    }
+
+    public String logout(HttpServletRequest request) {
+        return userService.logout(request);
     }
 }

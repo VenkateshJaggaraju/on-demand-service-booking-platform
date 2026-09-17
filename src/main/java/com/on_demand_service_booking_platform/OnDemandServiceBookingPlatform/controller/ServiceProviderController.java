@@ -1,12 +1,14 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.controller;
 
 
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceProviderDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceRequestDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceResponseDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.ServiceProvider;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceProviderRepository;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.ServiceProviderService;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +18,19 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:5173")
 public class ServiceProviderController {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ServiceProviderRepository serviceProviderRepository;
+
 
     @Autowired
     private ServiceProviderService serviceProviderService;
 
     @PostMapping("/register")
-    public ServiceProvider register(@RequestBody ServiceProvider serviceProvider) {
-        return userService.register(serviceProvider, serviceProviderRepository);
+    public ServiceProviderDTO register(@RequestBody ServiceProviderDTO dto) {
+        return serviceProviderService.register(dto);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody ServiceProvider serviceProvider) {
-        return userService.verify(serviceProvider, serviceProviderRepository);
+    public String login(@RequestBody ServiceProviderDTO dto) {
+        return serviceProviderService.login(dto);
     }
 
     @PostMapping("/service")
@@ -58,6 +57,11 @@ public class ServiceProviderController {
             @RequestParam(defaultValue = "1") int page) {
         int zeroIndexedPage = Math.max(page - 1, 0);
         return serviceProviderService.searchServices(name, minPrice, maxPrice, zeroIndexedPage);
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        return serviceProviderService.logout(request);
     }
 
 }

@@ -1,8 +1,10 @@
 
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.filter;
 
+
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.JwtService;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.MyUserDetailsService;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.TokenBlacklistService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,6 +31,9 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -49,13 +54,29 @@ public class JwtFilter extends OncePerRequestFilter {
 
             token = authHeader.substring(7);
 
+            // ---------------------------------------------
+            // Check whether JWT was invalidated during logout
+            // ---------------------------------------------
+
+            if (tokenBlacklistService.isBlacklisted(token)) {
+
+                // Token was logged out.
+                // Do not authenticate this request.
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            // ---------------------------------------------
+            // Extract username from JWT
+            // ---------------------------------------------
+
             try {
+
                 username = jwtService.extractUsername(token);
+
             } catch (Exception e) {
 
-                // Invalid / expired / malformed token.
-                // Don't crash the filter.
-                // Continue the request as unauthenticated.
+                // Invalid / expired / malformed JWT
                 username = null;
             }
         }
@@ -72,6 +93,10 @@ public class JwtFilter extends OncePerRequestFilter {
                 UserDetails userDetails =
                         context.getBean(MyUserDetailsService.class)
                                 .loadUserByUsername(username);
+
+                // ---------------------------------------------
+                // Validate JWT
+                // ---------------------------------------------
 
                 if (jwtService.validateToken(token, userDetails)) {
 
@@ -94,8 +119,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
             } catch (Exception e) {
 
-                // Invalid JWT/user.
-                // Leave SecurityContext unauthenticated.
+                // Invalid JWT or user not found.
+                // Leave request unauthenticated.
                 SecurityContextHolder.clearContext();
             }
         }
@@ -107,4 +132,3 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
-

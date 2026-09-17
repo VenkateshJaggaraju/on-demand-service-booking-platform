@@ -50,6 +50,7 @@ public class SecurityConfig {
                         // Let every preflight OPTIONS request through, on any path.
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+                        //public endpoints
                         .requestMatchers(
                                 "/",
                                 "/auth/validate",
@@ -58,9 +59,25 @@ public class SecurityConfig {
                                 "/customer/register",
                                 "/customer/login",
                                 "/service-provider/register",
-                                "/service-provider/login"
+                                "/service-provider/login",
+                                "/customer/services"
                         ).permitAll()
 
+                        //U should Login for this api (jwtToken) required
+                        .requestMatchers("/customer/payments")
+                        .authenticated()
+
+                        //Logout(jwtToken) required
+                        .requestMatchers("/customer/logout")
+                        .authenticated()
+
+                        .requestMatchers("/admin/logout")
+                        .authenticated()
+
+                        .requestMatchers("/aervice-provider/logout")
+                        .authenticated()
+
+                        //Role-based api's
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/customer/**").hasRole("CUSTOMER")
 
