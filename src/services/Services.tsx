@@ -488,15 +488,17 @@ export const Services: React.FC = () => {
                   <div className="service-card-bottom">
 
                     <div>
+                      <small>Starting from</small>
 
-                      <small>
-                        Starting from
-                      </small>
+                      <div className="service-price">
+                        <strong className="actual-price">
+                          ₹{service.actualPrice}
+                        </strong>
 
-                      <strong>
-                        {service.displayPrice}
-                      </strong>
-
+                        <span className="display-price">
+                          <del>{service.displayPrice}</del>
+                        </span>
+                      </div>
                     </div>
 
 
