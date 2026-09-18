@@ -9,10 +9,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AdminMapper {
 
-    // DTO -> Entity
+    // Entity <- DTO
     @Mapping(target = "id", ignore = true)
     Admin toEntity(AdminRequestDTO dto);
 
-    // Entity -> DTO
+    // DTO <- Entity
     AdminResponseDTO toResponseDTO(Admin admin);
 }

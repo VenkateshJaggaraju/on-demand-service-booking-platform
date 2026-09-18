@@ -45,7 +45,7 @@ import java.util.Map;
 
 /*
  * Note:
- * Only one user can access the application at a time
+ * Only one user can access this application at a time
  */
 
 @RestController

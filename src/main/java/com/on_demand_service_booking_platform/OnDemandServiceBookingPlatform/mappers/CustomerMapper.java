@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
-    // DTO -> Entity
+    // Entity <- DTO
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "bookings", ignore = true)
     Customer toEntity(CustomerRequestDTO dto);

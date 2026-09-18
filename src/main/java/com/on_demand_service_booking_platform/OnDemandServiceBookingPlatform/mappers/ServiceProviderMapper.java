@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ServiceProviderMapper {
 
-    // DTO -> Entity
+    // Entity <- DTO
     @Mapping(target = "id", ignore = true)
     ServiceProvider toEntity(ServiceProviderRequestDTO dto);
 

@@ -11,4 +11,9 @@ public class GlobalExceptionHandler {
     public String handler(UserExistsException exception){
         return exception.getMessage();
     }
+
+    @ExceptionHandler(Exception.class)
+    public String handler(Exception exception){
+        return exception.getMessage();
+    }
 }

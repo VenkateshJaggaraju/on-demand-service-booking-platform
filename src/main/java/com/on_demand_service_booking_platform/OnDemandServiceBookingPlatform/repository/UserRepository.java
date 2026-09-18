@@ -9,4 +9,4 @@ public interface UserRepository<T extends Users> extends JpaRepository<T, Long> 
 
     T findByUsername(String username);
 }
-//UserRepository provides implementation for AdminRepository, CustomerRepository, ServiceProviderRepository
+//UserRepository implements <-- {AdminRepository, CustomerRepository, ServiceProviderRepository}
