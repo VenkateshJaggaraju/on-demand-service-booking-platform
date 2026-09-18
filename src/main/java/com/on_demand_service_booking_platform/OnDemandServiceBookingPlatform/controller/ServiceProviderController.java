@@ -1,13 +1,8 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.controller;
 
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceProviderDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceRequestDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceResponseDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.ServiceProvider;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceProviderRepository;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.*;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.ServiceProviderService;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,17 +14,16 @@ import org.springframework.web.bind.annotation.*;
 public class ServiceProviderController {
 
 
-
     @Autowired
     private ServiceProviderService serviceProviderService;
 
     @PostMapping("/register")
-    public ServiceProviderDTO register(@RequestBody ServiceProviderDTO dto) {
+    public ServiceProviderResponseDTO register(@RequestBody ServiceProviderRequestDTO dto) {
         return serviceProviderService.register(dto);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody ServiceProviderDTO dto) {
+    public String login(@RequestBody ServiceProviderLoginRequestDTO dto) {
         return serviceProviderService.login(dto);
     }
 

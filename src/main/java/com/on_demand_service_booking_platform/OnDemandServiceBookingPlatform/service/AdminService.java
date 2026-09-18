@@ -1,6 +1,7 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service;
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.AdminDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.AdminRequestDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.AdminResponseDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Admin;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.AdminMapper;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.AdminRepository;
@@ -20,17 +21,14 @@ public class AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
-    @Autowired
-    private TokenBlacklistService tokenBlacklistService;
-
-    public AdminDTO register(AdminDTO dto) {
+    public AdminResponseDTO register(AdminRequestDTO dto) {
 
         Admin admin = adminMapper.toEntity(dto);
         Admin savedAdmin = userService.register(admin, adminRepository);
-        return adminMapper.toDTO(savedAdmin);
+        return adminMapper.toResponseDTO(savedAdmin);
     }
 
-    public String login(AdminDTO dto) {
+    public String login(AdminRequestDTO dto) {
 
         Admin admin = adminMapper.toEntity(dto);
         return userService.verify(admin, adminRepository);

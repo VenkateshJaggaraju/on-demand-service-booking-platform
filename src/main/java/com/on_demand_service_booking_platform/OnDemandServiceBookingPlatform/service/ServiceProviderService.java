@@ -2,11 +2,9 @@ package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.se
 
 
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceProviderDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.*;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.ServiceProvider;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.ServiceMapper;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceRequestDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceResponseDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Services;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.ServiceProviderMapper;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceProviderRepository;
@@ -73,7 +71,7 @@ public class ServiceProviderService {
         return result;
     }
 
-    public ServiceProviderDTO register(ServiceProviderDTO dto) {
+    public ServiceProviderResponseDTO register(ServiceProviderRequestDTO dto) {
         ServiceProvider serviceProvider = serviceProviderMapper.toEntity(dto);
 
         ServiceProvider savedServiceProvider =
@@ -82,10 +80,10 @@ public class ServiceProviderService {
                         serviceProviderRepository
                 );
 
-        return serviceProviderMapper.toDTO(savedServiceProvider);
+        return serviceProviderMapper.toResponseDTO(savedServiceProvider);
     }
 
-    public String login(ServiceProviderDTO dto) {
+    public String login(ServiceProviderLoginRequestDTO dto) {
         ServiceProvider serviceProvider = serviceProviderMapper.toEntity(dto);
 
         return userService.verify(

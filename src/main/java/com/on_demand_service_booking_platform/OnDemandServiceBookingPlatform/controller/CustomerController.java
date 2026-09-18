@@ -1,10 +1,9 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.controller;
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Customer;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.CustomerRepository;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerLoginRequestDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerRequestDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerResponseDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.CustomerService;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +18,12 @@ public class CustomerController {
 
     //    @PostMapping(value = "/register", consumes = "multipart/form-data")
     @PostMapping(value = "/register")
-    public CustomerDTO register(@RequestBody CustomerDTO dto) {
+    public CustomerResponseDTO register(@RequestBody CustomerRequestDTO dto) {
         return customerService.register(dto);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody CustomerDTO dto) {
+    public String login(@RequestBody CustomerLoginRequestDTO dto) {
         return customerService.login(dto);
     }
 

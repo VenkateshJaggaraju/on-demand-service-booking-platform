@@ -1,6 +1,7 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers;
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.AdminDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.AdminRequestDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.AdminResponseDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Admin;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,9 +11,8 @@ public interface AdminMapper {
 
     // DTO -> Entity
     @Mapping(target = "id", ignore = true)
-    Admin toEntity(AdminDTO dto);
+    Admin toEntity(AdminRequestDTO dto);
 
     // Entity -> DTO
-//    @Mapping(target = "password", ignore = true)
-    AdminDTO toDTO(Admin admin);
+    AdminResponseDTO toResponseDTO(Admin admin);
 }

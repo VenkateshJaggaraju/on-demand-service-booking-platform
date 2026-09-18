@@ -50,7 +50,7 @@ public class SecurityConfig {
                         // Let every preflight OPTIONS request through, on any path.
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        //public endpoints
+                        //public endpoints(un-authenticated)
                         .requestMatchers(
                                 "/",
                                 "/auth/validate",
@@ -63,7 +63,7 @@ public class SecurityConfig {
                                 "/customer/services"
                         ).permitAll()
 
-                        //U should Login for this api (jwtToken) required
+                        //U should Login for this api; (jwtToken) required
                         .requestMatchers("/customer/payments")
                         .authenticated()
 

@@ -24,6 +24,7 @@ import lombok.Setter;
 })
 public class ServiceProvider extends Users {
 
+
     @Column(name = "service_provider_profile", nullable = true)
     private byte[] profile;//get his image in bytes(BLOB) and max. size of image 4GB
 

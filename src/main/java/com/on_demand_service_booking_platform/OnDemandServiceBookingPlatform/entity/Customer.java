@@ -28,6 +28,7 @@ import java.util.List;
 public class Customer extends Users{
 
 
+
     @Column(name = "customer_profile", nullable = true)
     private byte[] profile;//get his image in bytes(BLOB) and max. size of image 4GB
 

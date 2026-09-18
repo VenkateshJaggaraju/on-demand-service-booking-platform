@@ -1,6 +1,8 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service;
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerLoginRequestDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerRequestDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerResponseDTO;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Customer;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.CustomerMapper;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.CustomerRepository;
@@ -20,14 +22,14 @@ public class CustomerService {
     @Autowired
     private CustomerMapper customerMapper;
 
-    public CustomerDTO register(CustomerDTO dto) {
+    public CustomerResponseDTO register(CustomerRequestDTO dto) {
         Customer customer = customerMapper.toEntity(dto);
         Customer savedCustomer = userService.register(customer, customerRepository);
 
-        return customerMapper.toDTO(savedCustomer);
+        return customerMapper.toResponseDTO(savedCustomer);
     }
 
-    public String login(CustomerDTO dto) {
+    public String login(CustomerLoginRequestDTO dto) {
 
         Customer customer = customerMapper.toEntity(dto);
         return userService.verify(customer, customerRepository);

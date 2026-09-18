@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO {
+public class CustomerRequestDTO {
 
     private String username;
     private String password;
@@ -17,3 +17,4 @@ public class CustomerDTO {
     private Long mobileNumber;
     private String email;
 }
+
