@@ -492,7 +492,7 @@ export const Services: React.FC = () => {
 
                       <div className="service-price">
                         <strong className="actual-price">
-                          ₹{service.actualPrice}
+                          ₹{service.actualPrice + 300}
                         </strong>
 
                         <span className="display-price">
