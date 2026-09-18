@@ -725,10 +725,13 @@ export const HomePage: React.FC = () => {
               just a few clicks.
             </p>
 
-            <button>
-              Book a Service
-              <ArrowRightIcon />
-            </button>
+              <Link to="/services">
+                <button>
+                  Book a Service
+                  <ArrowRightIcon />
+                </button>
+              </Link>
+
           </div>
         </section>
       </main>
