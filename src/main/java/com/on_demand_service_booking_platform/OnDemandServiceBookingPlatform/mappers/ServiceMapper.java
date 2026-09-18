@@ -1,15 +1,14 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers;
 
 
-import java.util.List;
-
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceRequestDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceResponseDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Services;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceRequestDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceResponseDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Services;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ServiceMapper {
@@ -40,9 +39,11 @@ public interface ServiceMapper {
 
     // Fills in displayPrice for rows that came from the JPQL projection,
     // which can't call this @Named method itself.
-    // show 100Rs more to Customer
+
+    // show 300Rs more to Customer on Cost Price
+    // show 500Rs less to Customer on Selling Price
     default List<ServiceResponseDTO> withDisplayPrice(List<ServiceResponseDTO> dtos) {
-        dtos.forEach(dto -> dto.setDisplayPrice(formatPrice(dto.getActualPrice()+100)));
+        dtos.forEach(dto -> dto.setDisplayPrice(formatPrice(dto.getActualPrice()+500)));
         return dtos;
     }
 
