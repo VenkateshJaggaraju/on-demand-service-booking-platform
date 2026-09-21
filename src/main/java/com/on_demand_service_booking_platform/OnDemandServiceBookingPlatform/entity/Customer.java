@@ -30,7 +30,7 @@ public class Customer extends Users{
 
 
     @Column(name = "customer_profile", nullable = true)
-    private byte[] profile;//get his image in bytes(BLOB) and max. size of image 4GB
+    private String profile;//get his image in bytes(BLOB) and max. size of image 4GB
 
     @Column(name = "customer_phone_number", unique = true, nullable = false)
     private Long mobileNumber;

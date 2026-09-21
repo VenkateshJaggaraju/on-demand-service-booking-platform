@@ -2,7 +2,6 @@ package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.en
 
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +25,7 @@ public class ServiceProvider extends Users {
 
 
     @Column(name = "service_provider_profile", nullable = true)
-    private byte[] profile;//get his image in bytes(BLOB) and max. size of image 4GB
+    private String profile;//get his image in bytes(BLOB) and max. size of image 4GB
 
 
     @Column(name = "service_provider_phone_number", unique = true, nullable = false)

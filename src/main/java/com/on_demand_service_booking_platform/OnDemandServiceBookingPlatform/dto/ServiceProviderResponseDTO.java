@@ -13,7 +13,7 @@ import lombok.Setter;
 public class ServiceProviderResponseDTO {
 
     private String username;
-    private byte[] profile;
+    private String profile;
     private Long mobileNumber;
     private String email;
     private Role role;

@@ -13,7 +13,7 @@ public class ServiceProviderRequestDTO {
 
     private String username;
     private String password;
-    private byte[] profile;
+    private String profile;
     private Long mobileNumber;
     private String email;
 }

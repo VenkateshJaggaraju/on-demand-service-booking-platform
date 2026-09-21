@@ -4,7 +4,6 @@ import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.enu
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.jspecify.annotations.Nullable;
 
 @MappedSuperclass
 @Getter

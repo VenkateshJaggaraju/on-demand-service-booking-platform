@@ -23,13 +23,7 @@ public class ServiceResponseDTO {
     private String icon;
     private String category;
     private long bookingCount;
-
-    /* Matches the "new ServiceResponseDTO(...)" shape in
-     * ServiceRepository#findAllWithBookingCount(). JPQL constructor
-     * expressions can only call real constructors — they can't invoke a
-     * @Named qualifier method — so displayPrice is left null here and set
-     * afterward in ServiceMapper.withDisplayPrice(...).
-     */
+    
     public ServiceResponseDTO(Long id, String name, String description, Integer actualPrice,
                               String icon, String category, long bookingCount) {
         this.id = id;

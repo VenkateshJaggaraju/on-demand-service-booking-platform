@@ -14,7 +14,7 @@ public class CustomerResponseDTO {
 
     private Long id;
     private String username;
-    private byte[] profile;
+    private String profile;
     private Long mobileNumber;
     private String email;
     private Role role;
