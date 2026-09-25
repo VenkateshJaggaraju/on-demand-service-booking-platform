@@ -6,7 +6,7 @@ import {
   isServiceProviderLoggedIn,
   logout,
 } from "./utils/Auth"; // adjust path to match your project
-
+// Define interfaces for services, steps, and testimonials
 interface Service {
   id: number;
   name: string;
