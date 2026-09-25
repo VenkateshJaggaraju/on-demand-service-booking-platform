@@ -18,24 +18,27 @@
         setLoading(true);
 
         try {
-        const response = await axios.post(
-            "http://localhost:1086/admin/login",
-            {
-            username: username,
-            password: password,
-            }
-        );
+            const response = await axios.post(
+                "http://localhost:1086/admin/login",
+                {
+                username: username,
+                password: password,
+                }
+            );
 
-        // JWT returned by Spring Boot
-        const token = response.data;
+            console.log("Login successful:", response);
 
-        // Store JWT
-        localStorage.setItem("token", token);
+            // JWT returned by Spring Boot
+            const token = response.data;
 
-        // Go to HomePage
-        navigate("/");
+            // Store JWT
+            localStorage.setItem("role", "ADMIN");
+            localStorage.setItem("token", token);
+
+            // Go to HomePage
+            navigate("/");
         } catch (error: any) {
-        console.error(error);
+            console.error(error);
 
         if (error.response?.status === 401) {
             setError("Invalid username or password");
@@ -45,7 +48,7 @@
             setError("Login failed. Please try again.");
         }
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
