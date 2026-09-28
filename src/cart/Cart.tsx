@@ -188,6 +188,13 @@ export const Cart: React.FC = () => {
 
           {/* FOOTER ACTIONS */}
           <div className="cart-actions">
+            {cartItems.length > 0 && (
+                <Link to="/booking">
+                <button className="book-services-button">
+                    Book These Services
+                </button>
+                </Link>
+            )}
             <Link to="/services">
               <button className="cart-view-services-button">
                 View All Services

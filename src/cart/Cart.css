@@ -361,7 +361,7 @@
 }
 
 .cart-view-services-button:hover {
-  background: #db2777;
+  background: #ce301c;
 }
 
 
@@ -386,7 +386,7 @@
 }
 
 .back-home-button:hover {
-  background: #1e293b;
+  background: #3da468;
 }
 
 
@@ -442,4 +442,24 @@
   .back-home-button {
     width: 100%;
   }
+}
+.book-services-button {
+  background: #592a92;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.book-services-button:hover {
+  background: #1f5a8f;
+  transform: translateY(-1px);
+}
+
+.book-services-button:active {
+  transform: translateY(0);
 }

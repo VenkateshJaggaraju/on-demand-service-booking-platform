@@ -388,7 +388,7 @@
 }
 
 .add-cart-button:hover {
-  background: #ec4899;
+  background: #ec7148;
   border-color: #ec4899;
 
   color: white;
@@ -432,7 +432,7 @@
 }
 
 .book-service-button:hover {
-  background: #db2777;
+  background: #66db27;
 
   transform: translateY(-2px);
 }
