@@ -37,7 +37,7 @@ public class Customer extends Users{
     @Column(name = "customer_mail", unique = true, nullable = false)
     private String email;
 
-    @ManyToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer")
     private List<Booking> bookings;
 
     @Override

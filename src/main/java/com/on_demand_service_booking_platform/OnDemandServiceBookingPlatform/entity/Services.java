@@ -31,4 +31,14 @@ public class Services {
     @ManyToMany(mappedBy = "service")
     private List<Booking> bookings;
 
+    /*
+    Services.java                Booking.java
+
+    @OneToMany                @ManyToOne
+      mappedBy = "service"  ◄── private Services service;
+      │                           │
+      └────── Java field ─────────┘
+
+
+     */
 }

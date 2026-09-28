@@ -37,7 +37,9 @@ public class Booking {
 
     private Double totalAmount;
 
+    private String reason;
+
     @Enumerated(EnumType.STRING)//without this JPA can store these indexes
     @Column(nullable = false)
-    private BookingStatus status;
+    private BookingStatus status= BookingStatus.PENDING;
 }
