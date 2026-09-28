@@ -1,20 +1,20 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.controller;
 
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerLoginRequestDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerRequestDTO;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.CustomerResponseDTO;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.*;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
 @CrossOrigin(origins = "http://localhost:5173")
 public class CustomerController {
 
-   @Autowired
-   private CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
     //    @PostMapping(value = "/register", consumes = "multipart/form-data")
     @PostMapping(value = "/register")
@@ -30,6 +30,16 @@ public class CustomerController {
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         return customerService.logout(request);
+    }
+
+    @PostMapping("/cart")
+    public CartItemResponseDTO addToCart(@RequestBody CartRequestDTO dto){
+        return customerService.addToCart(dto);
+    }
+
+    @GetMapping("/cart")
+    public List<CartItemResponseDTO> getCartItems(@RequestParam Long customerId){
+        return customerService.getCartItems(customerId);
     }
 
     @GetMapping("/payments")

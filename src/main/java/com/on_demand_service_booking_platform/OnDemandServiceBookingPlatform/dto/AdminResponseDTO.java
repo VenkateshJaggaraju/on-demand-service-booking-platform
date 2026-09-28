@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** Safe administrator data returned by the API. */
 @Getter
 @Setter
 @NoArgsConstructor

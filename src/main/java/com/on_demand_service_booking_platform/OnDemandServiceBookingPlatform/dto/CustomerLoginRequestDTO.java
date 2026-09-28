@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** Credentials accepted only by the customer login endpoint. */
 @Getter
 @Setter
 @NoArgsConstructor

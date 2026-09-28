@@ -32,6 +32,9 @@ public class ServiceProviderController {
         return serviceProviderService.addService(requestDTO);
     }
 
+//    @PostMapping("/cart")
+//    public List<ServiceResponseDTO>
+
     // One endpoint covers plain listing, name search, price-range filter,
     // and any combination of the two — pass only the params you need.
     // "page" is 1-indexed here for a friendlier frontend API (page=1 is

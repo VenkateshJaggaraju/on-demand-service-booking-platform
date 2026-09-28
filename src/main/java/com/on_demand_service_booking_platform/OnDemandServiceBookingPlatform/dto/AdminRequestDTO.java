@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** Input accepted when an administrator registers or signs in. */
 @Getter
 @Setter
 @NoArgsConstructor

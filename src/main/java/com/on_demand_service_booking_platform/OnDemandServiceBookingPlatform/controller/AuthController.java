@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 /* You're thinking of JwtService.validateToken(token, userDetails) — that one's already
- * there. But it's a private-ish internal Java method, not an HTTP endpoint. It only gets called
+ * there. But it is a private-ish internal Java method, not an HTTP endpoint. It only gets called
  * inside JwtFilter, on the backend, for every request that already has a token attached.
  * The problem is your React frontend has no way to call that method — it's not exposed over
  * HTTP. All the frontend has is localStorage.getItem("token"), and it has no way to ask "hey

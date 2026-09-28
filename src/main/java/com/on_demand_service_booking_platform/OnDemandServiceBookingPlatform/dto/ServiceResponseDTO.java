@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// What the API returns — no lazy "bookings" collection, just a safe summary
 
 @Getter
 @Setter

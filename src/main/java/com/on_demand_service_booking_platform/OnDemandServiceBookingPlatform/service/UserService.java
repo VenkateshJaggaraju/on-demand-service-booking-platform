@@ -5,6 +5,7 @@ import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.ent
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.exceptions.UserExistsException;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -89,6 +91,8 @@ public class UserService {
 
     public String logout(HttpServletRequest request) {
 
+//        log.info(",?");
+//        var  a=1;
         String authHeader =
                 request.getHeader("Authorization");
 

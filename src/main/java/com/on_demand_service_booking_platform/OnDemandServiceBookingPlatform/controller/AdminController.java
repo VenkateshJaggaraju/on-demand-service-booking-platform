@@ -31,5 +31,4 @@ public class AdminController {
         return adminService.logout(request);
     }
 
-
 }

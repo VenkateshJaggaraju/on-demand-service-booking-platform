@@ -10,7 +10,7 @@ public class TokenBlacklistService {
 
     /*
      * why ConcurrentHashMap instead of HashMap?
-     * thread-safe(i.e., one request can add a token while another request checks whether a token exists.)
+     * thread-safe(i.e., one request can add a token while another request checks whether a token exists?)
      */
     private final Set<String> blacklistedTokens =
             ConcurrentHashMap.newKeySet();

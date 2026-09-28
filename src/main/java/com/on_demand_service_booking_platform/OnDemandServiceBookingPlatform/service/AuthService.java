@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Service
 public class AuthService {
-    
+
     @Autowired
     private JwtService jwtService;
 

@@ -48,7 +48,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // Let every preflight OPTIONS request through, on any path.
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**")
+                        .permitAll()
 
                         //public endpoints(un-authenticated)
                         .requestMatchers(
@@ -74,22 +75,34 @@ public class SecurityConfig {
                         .requestMatchers("/admin/logout")
                         .authenticated()
 
-                        .requestMatchers("/aervice-provider/logout")
+                        .requestMatchers("/service-provider/logout")
+                        .authenticated()
+
+                        .requestMatchers(HttpMethod.POST, "/customer/cart")
+                        .authenticated()
+
+                        .requestMatchers(HttpMethod.GET, "/customer/cart")
                         .authenticated()
 
                         //Role-based api's
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers("/customer/**")
+                        .hasRole("CUSTOMER")
 
                         // Browsing services is public — anyone (including a
                         // not-logged-in customer) can view what's on offer.
-                        .requestMatchers(HttpMethod.GET, "/service-provider/services").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/service-provider/services")
+                        .permitAll()
 
                         // Everything else under /service-provider/** — adding a
                         // service, etc. — still requires the SERVICEPROVIDER role.
-                        .requestMatchers("/service-provider/**").hasRole("SERVICEPROVIDER")
+                        .requestMatchers("/service-provider/**")
+                        .hasRole("SERVICEPROVIDER")
 
-                        .requestMatchers("/profile/**").hasAnyRole("ADMIN", "CUSTOMER", "SERVICEPROVIDER")
+                        .requestMatchers("/profile/**")
+                        .hasAnyRole("ADMIN", "CUSTOMER", "SERVICEPROVIDER")
 
                         .anyRequest().authenticated()
                 )

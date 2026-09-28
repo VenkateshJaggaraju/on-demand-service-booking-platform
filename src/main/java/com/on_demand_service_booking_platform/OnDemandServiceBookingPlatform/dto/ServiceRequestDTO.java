@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// What a service provider sends to create/update a service
 @Getter
 @Setter
 @NoArgsConstructor
