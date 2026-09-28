@@ -29,6 +29,7 @@ export const ServiceProviderLogin = () => {
       );
 
       // Store JWT token — this is the only thing auth checks rely on now.
+      localStorage.setItem("role", "SERVICE_PROVIDER");
       localStorage.setItem("token", response.data);
 
       // Respect wherever the user was trying to go before being sent here

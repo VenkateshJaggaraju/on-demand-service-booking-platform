@@ -54,6 +54,13 @@
     return result.valid && result.role === `ROLE_${role}`;
     }
 
-    export function logout() {
+   
+    export function clearSession() {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("customerId");
+    }
+
+    export function logout() {
+    clearSession();
     }

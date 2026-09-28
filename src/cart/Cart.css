@@ -1,0 +1,198 @@
+ @import "tailwindcss";
+
+/* =========================================
+   Cart Page
+========================================= */
+
+.cart-page {
+  @apply min-h-screen bg-gray-50 px-4 py-10;
+}
+
+.cart-container {
+  @apply mx-auto max-w-6xl;
+}
+
+
+/* =========================================
+   Header
+========================================= */
+
+.cart-header {
+  @apply mb-8 flex flex-wrap items-end justify-between gap-4;
+}
+
+.cart-title {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+.cart-subtitle {
+  @apply mt-1 text-gray-600;
+}
+
+.cart-total-header {
+  @apply text-right;
+}
+
+.cart-total-label {
+  @apply text-sm text-gray-500;
+}
+
+.cart-total-price {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+
+/* =========================================
+   Error
+========================================= */
+
+.cart-error {
+  @apply mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700;
+}
+
+
+/* =========================================
+   Loading
+========================================= */
+
+.cart-loading {
+  @apply py-16 text-center text-gray-500;
+}
+
+
+/* =========================================
+   Cart Grid
+========================================= */
+
+.cart-grid {
+  @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+
+/* =========================================
+   Cart Card
+========================================= */
+
+.cart-card {
+  @apply flex flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md;
+}
+
+.cart-card-header {
+  @apply mb-4 flex items-center justify-between;
+}
+
+.cart-icon {
+  @apply flex h-12 w-12 items-center justify-center rounded-lg bg-green-50 text-2xl;
+}
+
+.cart-category {
+  @apply rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700;
+}
+
+
+/* =========================================
+   Service Information
+========================================= */
+
+.cart-service-name {
+  @apply text-lg font-semibold text-gray-900;
+}
+
+.cart-service-description {
+  @apply mt-1 flex-1 text-sm text-gray-600;
+}
+
+
+/* =========================================
+   Price
+========================================= */
+
+.cart-price-section {
+  @apply mt-4 border-t border-gray-100 pt-4;
+}
+
+.cart-price-label {
+  @apply text-gray-500;
+}
+
+.cart-service-price {
+  @apply text-xl font-bold text-gray-900;
+}
+
+
+/* =========================================
+   Empty Cart
+========================================= */
+
+.cart-empty {
+  @apply rounded-xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center;
+}
+
+.cart-empty-icon {
+  @apply text-5xl;
+}
+
+.cart-empty-title {
+  @apply mt-4 text-xl font-semibold text-gray-900;
+}
+
+.cart-empty-text {
+  @apply mt-1 text-gray-600;
+}
+
+
+/* =========================================
+   Footer Actions
+========================================= */
+
+.cart-actions {
+  @apply mt-10 flex flex-wrap items-center gap-3;
+}
+
+
+/* =========================================
+   Buttons
+========================================= */
+
+.cart-button {
+  @apply rounded-lg px-6 py-3 font-semibold shadow-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.cart-button-primary {
+  @apply bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-500;
+}
+
+.cart-button-secondary {
+  @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 focus-visible:ring-gray-400;
+}
+
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 640px) {
+  .cart-page {
+    @apply px-3 py-6;
+  }
+
+  .cart-title {
+    @apply text-2xl;
+  }
+
+  .cart-total-price {
+    @apply text-xl;
+  }
+
+  .cart-actions {
+    @apply flex-col items-stretch;
+  }
+
+  .cart-actions a {
+    @apply w-full;
+  }
+
+  .cart-button {
+    @apply w-full;
+  }
+}

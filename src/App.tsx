@@ -11,6 +11,10 @@ import { PrivateRoute } from "./utils/PrivateRoute";
 import { ServiceProviderRegister } from "./service-provider/ServiceProviderRegister";
 import { ServiceProviderLogin } from "./service-provider/ServiceProviderLogin";
 import { ProvideServices } from "./services/ProvideServices";
+import { Cart } from "./cart/Cart";
+import {AxiosSetup} from "./utils/AxiosSetup";
+
+AxiosSetup();
 
 const router = createBrowserRouter([
   {
@@ -79,6 +83,15 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute role="CUSTOMER">
         <Services />
+      </PrivateRoute>
+    ),
+  },
+
+  {
+    path: "/cart",
+    element: (
+      <PrivateRoute role="CUSTOMER">
+        <Cart />
       </PrivateRoute>
     ),
   },

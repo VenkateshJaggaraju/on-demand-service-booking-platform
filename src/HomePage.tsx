@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  isCustomerLoggedIn,
-  isServiceProviderLoggedIn,
-  logout,
-} from "./utils/Auth"; // adjust path to match your project
+import { isCustomerLoggedIn, 
+  isServiceProviderLoggedIn, 
+  clearSession 
+} from "./utils/Auth";// adjust path to match your project
+import axios from "axios";
 
 interface Service {
   id: number;
@@ -312,11 +312,18 @@ export const HomePage: React.FC = () => {
   // <Link> elements that never checked auth state. Now they only render
   // when the person is actually logged out; logged-in customers see
   // "My Services" / "Logout" instead.
-  const handleLogout = () => {
-    logout();
-    setAuthStatus("loggedOut");
-    setMobileMenu(false);
-    navigate("/");
+
+  const handleLogout = async () => {
+    try {
+      // the axios interceptor attaches the token, so call the server first
+      await axios.post("http://localhost:1086/customer/logout");
+    } catch (err) {
+      console.error("Logout request failed:", err);
+    } finally {
+      clearSession();
+      setAuthStatus("loggedOut");        // updates the navbar immediately
+      navigate("/", { replace: true });
+    }
   };
 
   const renderAuthButtons = (onNavigate?: () => void) => {

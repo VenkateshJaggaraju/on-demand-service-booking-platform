@@ -1,4 +1,3 @@
-
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import "./Services.css";
@@ -78,6 +77,12 @@ export const Services: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
 
   // =========================================================
+  // CART
+  // =========================================================
+
+  const [cart, setCart] = useState<Service[]>([]);
+
+  // =========================================================
   // LOADING / ERROR
   // =========================================================
 
@@ -127,6 +132,7 @@ export const Services: React.FC = () => {
   // =========================================================
 
   const getPriceParams = () => {
+
     switch (priceRange) {
 
       case "200-500":
@@ -155,6 +161,7 @@ export const Services: React.FC = () => {
       default:
         return {};
     }
+
   };
 
   // =========================================================
@@ -213,9 +220,6 @@ export const Services: React.FC = () => {
 
   // =========================================================
   // CATEGORY LIST
-  //
-  // Because pagination is server-side, these categories come
-  // only from the currently loaded page.
   // =========================================================
 
   const categories = useMemo(() => {
@@ -234,9 +238,6 @@ export const Services: React.FC = () => {
 
   // =========================================================
   // CATEGORY FILTER
-  //
-  // Search and price are handled by the backend.
-  // Category is currently filtered on the loaded page.
   // =========================================================
 
   const filteredServices = useMemo(() => {
@@ -250,6 +251,71 @@ export const Services: React.FC = () => {
     );
 
   }, [services, category]);
+
+  // =========================================================
+  // CHECK IF SERVICE IS IN CART
+  // =========================================================
+
+  const isInCart = (serviceId: number) => {
+
+    return cart.some(
+      (service) => service.id === serviceId
+    );
+
+  };
+
+  // =========================================================
+  // ADD TO CART
+  // =========================================================
+
+  const getCustomerId = (): number => {
+    const stored = localStorage.getItem("customerId");
+    return stored ? Number(stored) : 1;
+  };
+
+  const handleAddToCart = async (service: Service) => {
+
+    if (isInCart(service.id)) {
+      return;
+    }
+
+    setCart((previousCart) => [...previousCart, service]); // optimistic update
+
+    try {
+
+      await axios.post(`${API_BASE_URL}/customer/cart`, {
+        customerId: getCustomerId(),
+        serviceId: service.id,
+      });
+
+    } catch (err) {
+
+      console.error("Failed to add to cart:", err);
+      // roll back on failure
+      setCart((previousCart) => previousCart.filter((s) => s.id !== service.id));
+
+    }
+
+  };
+
+  useEffect(() => {
+    const loadCart = async () => {
+      try {
+        const res = await axios.get<{ cartItemId: number; service: Service }[]>(
+          `${API_BASE_URL}/customer/cart`,
+          { params: { customerId: getCustomerId() } }
+        );
+
+        if (Array.isArray(res.data)) {
+          setCart(res.data.map((item) => item.service));
+        }
+      } catch (err) {
+        console.error("Failed to load cart:", err);
+      }
+    };
+
+    loadCart();
+  }, []);
 
   // =========================================================
   // BOOK NOW
@@ -344,6 +410,37 @@ export const Services: React.FC = () => {
 
 
           {/* =================================================
+              CART SUMMARY
+          ================================================== */}
+
+          <div className="cart-summary">
+
+            <span className="cart-icon">
+              🛒
+            </span>
+
+            <span>
+              {cart.length} service
+              {cart.length !== 1 ? "s" : ""} in cart
+            </span>
+
+            {cart.length > 0 && (
+              <Link to="/cart">
+                <button
+                  className="view-cart-button"
+                  onClick={() =>
+                    console.log("Cart:", cart)
+                  }
+                >
+                  View Cart →
+                </button>
+              </Link>
+            )}
+
+          </div>
+
+
+          {/* =================================================
               CATEGORY FILTER
           ================================================== */}
 
@@ -377,7 +474,7 @@ export const Services: React.FC = () => {
               PRICE FILTER
           ================================================== */}
 
-          <div className="category-container">
+          <div className="category-container price-filter">
 
             {priceRanges.map((item) => (
 
@@ -487,30 +584,67 @@ export const Services: React.FC = () => {
 
                   <div className="service-card-bottom">
 
-                    <div>
-                      <small>Starting from</small>
+                    <div className="service-price-container">
+
+                      <small>
+                        Starting from
+                      </small>
 
                       <div className="service-price">
+
                         <strong className="actual-price">
                           ₹{service.actualPrice + 300}
                         </strong>
 
                         <span className="display-price">
-                          <del>{service.displayPrice}</del>
+                          <del>
+                            {service.displayPrice}
+                          </del>
                         </span>
+
                       </div>
+
                     </div>
 
 
-                    <button
-                      onClick={() =>
-                        handleBookNow(service)
-                      }
-                      className="book-service-button"
-                    >
-                      Book Now
-                      <span>→</span>
-                    </button>
+                    {/* ACTION BUTTONS */}
+
+                    <div className="service-card-actions">
+
+                      {/* ADD TO CART */}
+
+                      <button
+                        onClick={() =>
+                          handleAddToCart(service)
+                        }
+                        className={
+                          isInCart(service.id)
+                            ? "add-cart-button added"
+                            : "add-cart-button"
+                        }
+                        disabled={isInCart(service.id)}
+                      >
+
+                        {isInCart(service.id)
+                          ? "✓ Added"
+                          : "🛒 Add to Cart"}
+
+                      </button>
+
+
+                      {/* BOOK NOW */}
+
+                      <button
+                        onClick={() =>
+                          handleBookNow(service)
+                        }
+                        className="book-service-button"
+                      >
+                        Book Now
+                        <span>→</span>
+                      </button>
+
+                    </div>
 
                   </div>
 
@@ -542,17 +676,7 @@ export const Services: React.FC = () => {
 
           {!loading && totalPages > 1 && (
 
-            <div
-              className="service-pagination"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "8px",
-                marginTop: "24px",
-                flexWrap: "wrap",
-              }}
-            >
+            <div className="service-pagination">
 
               {/* PREVIOUS */}
 
@@ -561,22 +685,7 @@ export const Services: React.FC = () => {
                   setPage((p) => Math.max(p - 1, 1))
                 }
                 disabled={page === 1}
-                style={{
-                  padding: "8px 16px",
-                  borderRadius: "9999px",
-                  border: "1px solid #f9a8d4",
-                  background: "#fff",
-                  color:
-                    page === 1
-                      ? "#f9a8d4"
-                      : "#db2777",
-                  fontWeight: 600,
-                  cursor:
-                    page === 1
-                      ? "not-allowed"
-                      : "pointer",
-                  opacity: page === 1 ? 0.5 : 1,
-                }}
+                className="pagination-button"
               >
                 ← Prev
               </button>
@@ -594,22 +703,11 @@ export const Services: React.FC = () => {
                   onClick={() =>
                     setPage(pageNumber)
                   }
-                  style={{
-                    minWidth: "36px",
-                    height: "36px",
-                    borderRadius: "9999px",
-                    border: "1px solid #f9a8d4",
-                    background:
-                      pageNumber === page
-                        ? "#ec4899"
-                        : "#fff",
-                    color:
-                      pageNumber === page
-                        ? "#fff"
-                        : "#db2777",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                  }}
+                  className={
+                    pageNumber === page
+                      ? "pagination-number active"
+                      : "pagination-number"
+                  }
                 >
                   {pageNumber}
                 </button>
@@ -626,23 +724,7 @@ export const Services: React.FC = () => {
                   )
                 }
                 disabled={page === totalPages}
-                style={{
-                  padding: "8px 16px",
-                  borderRadius: "9999px",
-                  border: "1px solid #f9a8d4",
-                  background: "#fff",
-                  color:
-                    page === totalPages
-                      ? "#f9a8d4"
-                      : "#db2777",
-                  fontWeight: 600,
-                  cursor:
-                    page === totalPages
-                      ? "not-allowed"
-                      : "pointer",
-                  opacity:
-                    page === totalPages ? 0.5 : 1,
-                }}
+                className="pagination-button"
               >
                 Next →
               </button>
@@ -698,11 +780,15 @@ export const Services: React.FC = () => {
             BACK TO HOME
         ====================================================== */}
 
-        <Link to="/">
-          <button>
-            Back to Home
-          </button>
-        </Link>
+        <div className="back-home-container">
+
+          <Link to="/">
+            <button className="back-home-button">
+              Back to Home
+            </button>
+          </Link>
+
+        </div>
 
       </section>
 

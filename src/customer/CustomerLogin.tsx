@@ -24,6 +24,7 @@
             password,
         });
 
+        localStorage.setItem("role", "CUSTOMER");
         localStorage.setItem("token", response.data);
 
         const state = location.state as { redirectTo?: string; serviceId?: number } | null;
