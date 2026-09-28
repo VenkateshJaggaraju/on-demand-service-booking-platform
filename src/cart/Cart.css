@@ -1,198 +1,445 @@
- @import "tailwindcss";
-
 /* =========================================
-   Cart Page
+   CART PAGE
+   Uses the same service styles as Services.css
 ========================================= */
 
-.cart-page {
-  @apply min-h-screen bg-gray-50 px-4 py-10;
+* {
+  box-sizing: border-box;
 }
 
-.cart-container {
-  @apply mx-auto max-w-6xl;
+.service-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.service-container {
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.services-section {
+  padding: 70px 0;
 }
 
 
 /* =========================================
-   Header
+   CART HEADER
 ========================================= */
 
 .cart-header {
-  @apply mb-8 flex flex-wrap items-end justify-between gap-4;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+  margin-bottom: 45px;
+}
+
+.cart-header .service-label {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
 }
 
 .cart-title {
-  @apply text-3xl font-bold text-gray-900;
+  margin: 18px 0 0;
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -2px;
 }
 
 .cart-subtitle {
-  @apply mt-1 text-gray-600;
+  margin: 12px 0 0;
+  color: #64748b;
+  font-size: 16px;
 }
+
+
+/* =========================================
+   TOTAL
+========================================= */
 
 .cart-total-header {
-  @apply text-right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-.cart-total-label {
-  @apply text-sm text-gray-500;
+.cart-total-header small {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.cart-total-price {
-  @apply text-2xl font-bold text-gray-900;
+.cart-total-header strong {
+  margin-top: 4px;
+  color: #2563eb;
+  font-size: 28px;
 }
 
 
 /* =========================================
-   Error
+   SERVICE GRID
 ========================================= */
 
-.cart-error {
-  @apply mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700;
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
 }
 
 
 /* =========================================
-   Loading
+   SERVICE CARD
 ========================================= */
 
-.cart-loading {
-  @apply py-16 text-center text-gray-500;
+.service-card {
+  padding: 25px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+
+  background: white;
+
+  transition: all 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #f9a8d4;
+
+  box-shadow: 0 20px 40px rgba(236, 72, 153, 0.1);
+}
+
+.service-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.service-icon {
+  width: 65px;
+  height: 65px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: #eff6ff;
+
+  font-size: 32px;
+}
+
+.service-category {
+  padding: 6px 10px;
+
+  border-radius: 8px;
+
+  background: #f1f5f9;
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.service-card h3 {
+  margin: 20px 0 0;
+  font-size: 19px;
+}
+
+.service-card > p {
+  min-height: 48px;
+
+  margin: 10px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 
 /* =========================================
-   Cart Grid
+   PRICE
 ========================================= */
 
-.cart-grid {
-  @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3;
+.service-card-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 25px;
+  padding-top: 20px;
+
+  border-top: 1px solid #f1f5f9;
+}
+
+.service-price-container {
+  flex-shrink: 0;
+}
+
+.service-card-bottom small {
+  display: block;
+
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.service-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.service-card-bottom strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #2563eb;
+  font-size: 20px;
+}
+
+.display-price {
+  color: #94a3b8;
+  font-size: 12px;
 }
 
 
 /* =========================================
-   Cart Card
+   REMOVE BUTTON
 ========================================= */
 
-.cart-card {
-  @apply flex flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md;
+.cart-remove-button {
+  margin-top: 12px;
+
+  width: 100%;
+
+  padding: 10px 13px;
+
+  border: 1px solid #f9a8d4;
+  border-radius: 10px;
+
+  background: #fdf2f8;
+  color: #db2777;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
 }
 
-.cart-card-header {
-  @apply mb-4 flex items-center justify-between;
+.cart-remove-button:hover {
+  background: #ec4899;
+  border-color: #ec4899;
+
+  color: white;
+
+  transform: translateY(-2px);
 }
 
-.cart-icon {
-  @apply flex h-12 w-12 items-center justify-center rounded-lg bg-green-50 text-2xl;
-}
-
-.cart-category {
-  @apply rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700;
+.cart-remove-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 
 /* =========================================
-   Service Information
+   ERROR
 ========================================= */
 
-.cart-service-name {
-  @apply text-lg font-semibold text-gray-900;
-}
+.service-error {
+  margin: 20px 0;
+  padding: 15px;
 
-.cart-service-description {
-  @apply mt-1 flex-1 text-sm text-gray-600;
+  border-radius: 10px;
+
+  background: #fef2f2;
+  color: #dc2626;
+
+  text-align: center;
+  font-weight: 600;
 }
 
 
 /* =========================================
-   Price
+   LOADING
 ========================================= */
 
-.cart-price-section {
-  @apply mt-4 border-t border-gray-100 pt-4;
-}
+.service-loading {
+  padding: 70px 20px;
 
-.cart-price-label {
-  @apply text-gray-500;
-}
+  color: #64748b;
 
-.cart-service-price {
-  @apply text-xl font-bold text-gray-900;
+  text-align: center;
+  font-size: 18px;
 }
 
 
 /* =========================================
-   Empty Cart
+   EMPTY CART
 ========================================= */
 
-.cart-empty {
-  @apply rounded-xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center;
+.empty-services {
+  padding: 70px 20px;
+
+  text-align: center;
 }
 
-.cart-empty-icon {
-  @apply text-5xl;
+.empty-services > div {
+  font-size: 50px;
 }
 
-.cart-empty-title {
-  @apply mt-4 text-xl font-semibold text-gray-900;
+.empty-services h3 {
+  margin: 15px 0 0;
+  font-size: 24px;
 }
 
-.cart-empty-text {
-  @apply mt-1 text-gray-600;
+.empty-services p {
+  color: #64748b;
+}
+
+.empty-services button {
+  margin-top: 15px;
+
+  padding: 12px 20px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.empty-services button:hover {
+  background: #1d4ed8;
 }
 
 
 /* =========================================
-   Footer Actions
+   FOOTER ACTIONS
 ========================================= */
 
 .cart-actions {
-  @apply mt-10 flex flex-wrap items-center gap-3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 50px;
+}
+
+.cart-view-services-button {
+  padding: 12px 22px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #ec4899;
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.cart-view-services-button:hover {
+  background: #db2777;
 }
 
 
 /* =========================================
-   Buttons
+   BACK HOME
 ========================================= */
 
-.cart-button {
-  @apply rounded-lg px-6 py-3 font-semibold shadow-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+.back-home-button {
+  padding: 12px 22px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #0f172a;
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
 }
 
-.cart-button-primary {
-  @apply bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-500;
-}
-
-.cart-button-secondary {
-  @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 focus-visible:ring-gray-400;
+.back-home-button:hover {
+  background: #1e293b;
 }
 
 
 /* =========================================
-   Responsive
+   RESPONSIVE
 ========================================= */
 
-@media (max-width: 640px) {
-  .cart-page {
-    @apply px-3 py-6;
+@media (max-width: 1100px) {
+
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .service-container {
+    width: min(100% - 30px, 1200px);
+  }
+
+  .services-section {
+    padding: 50px 0;
+  }
+
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cart-total-header {
+    align-items: flex-start;
   }
 
   .cart-title {
-    @apply text-2xl;
-  }
-
-  .cart-total-price {
-    @apply text-xl;
+    font-size: 40px;
   }
 
   .cart-actions {
-    @apply flex-col items-stretch;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .cart-actions a {
-    @apply w-full;
+    width: 100%;
   }
 
-  .cart-button {
-    @apply w-full;
+  .cart-view-services-button,
+  .back-home-button {
+    width: 100%;
   }
 }

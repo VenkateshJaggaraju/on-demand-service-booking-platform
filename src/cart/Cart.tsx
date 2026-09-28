@@ -31,6 +31,7 @@ export const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [removingId, setRemovingId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -66,139 +67,140 @@ export const Cart: React.FC = () => {
   }, []);
 
   const total = cartItems.reduce(
-    (sum, item) => sum + item.service.actualPrice,
+    (sum, item) => sum + item.service.actualPrice + 300,
     0
   );
 
+  const handleRemove = async (cartItemId: number) => {
+    setRemovingId(cartItemId);
+    setError(null);
+
+    try {
+      await axios.delete(`${API_BASE_URL}/cart/${cartItemId}`, {
+        params: {
+          customerId: getCustomerId(),
+        },
+      });
+
+      setCartItems((previousCart) =>
+        previousCart.filter((item) => item.cartItemId !== cartItemId)
+      );
+    } catch (err) {
+      console.error("Failed to remove item:", err);
+      setError("Could not remove the item. Please try again.");
+    } finally {
+      setRemovingId(null);
+    }
+  };
+
   return (
-    <div className="cart-page">
-      <div className="cart-container">
+    <div className="service-page">
+      <section className="services-section">
+        <div className="service-container">
 
-        {/* Header */}
-        <div className="cart-header">
-          <div>
-            <h2 className="cart-title">Your Cart</h2>
+          {/* CART HEADER */}
+          <div className="cart-header">
+            <div>
+              <span className="service-label">HOMESERVE SERVICES</span>
 
-            <p className="cart-subtitle">
-              {cartItems.length} service
-              {cartItems.length !== 1 ? "s" : ""} in cart
-            </p>
-          </div>
+              <h1 className="cart-title">Your Cart</h1>
 
-          {cartItems.length > 0 && (
-            <div className="cart-total-header">
-              <p className="cart-total-label">Total</p>
-
-              <p className="cart-total-price">
-                ₹{total}
+              <p className="cart-subtitle">
+                {cartItems.length} service
+                {cartItems.length !== 1 ? "s" : ""} in cart
               </p>
             </div>
-          )}
-        </div>
 
-        {/* Error */}
-        {error && (
-          <div className="cart-error">
-            {error}
+            {cartItems.length > 0 && (
+              <div className="cart-total-header">
+                <small>Total</small>
+                <strong>₹{total}</strong>
+              </div>
+            )}
           </div>
-        )}
 
-        {/* Loading */}
-        {loading && (
-          <div className="cart-loading">
-            Loading cart...
-          </div>
-        )}
+          {/* ERROR */}
+          {error && <div className="service-error">{error}</div>}
 
-        {/* Cart Items */}
-        {!loading && cartItems.length > 0 && (
-          <div className="cart-grid">
+          {/* LOADING */}
+          {loading && <div className="service-loading">Loading cart...</div>}
 
-            {cartItems.map((item) => (
-              <div
-                key={item.cartItemId}
-                className="cart-card"
-              >
-                {/* Card Header */}
-                <div className="cart-card-header">
+          {/* CART ITEMS */}
+          {!loading && cartItems.length > 0 && (
+            <div className="service-grid">
+              {cartItems.map((item) => (
+                <div className="service-card" key={item.cartItemId}>
 
-                  <div className="cart-icon">
-                    {item.service.icon}
+                  <div className="service-card-top">
+                    <div className="service-icon">{item.service.icon}</div>
+                    <span className="service-category">
+                      {item.service.category}
+                    </span>
                   </div>
 
-                  <span className="cart-category">
-                    {item.service.category}
-                  </span>
+                  <h3>{item.service.name}</h3>
 
-                </div>
+                  <p>{item.service.description}</p>
 
-                {/* Service Information */}
-                <h3 className="cart-service-name">
-                  {item.service.name}
-                </h3>
+                  <div className="service-card-bottom">
+                    <div className="service-price-container">
+                      <small>Starting from</small>
 
-                <p className="cart-service-description">
-                  {item.service.description}
-                </p>
-
-                {/* Price */}
-                <div className="cart-price-section">
-
+                      <div className="service-price">
                         <strong className="actual-price">
                           ₹{item.service.actualPrice + 300}
                         </strong>
 
                         <span className="display-price">
-                          <del>
-                            {item.service.displayPrice}
-                          </del>
+                          <del>{item.service.displayPrice}</del>
                         </span>
-
                       </div>
+                    </div>
+                  </div>
 
-              </div>
-            ))}
+                  <button
+                    className="cart-remove-button"
+                    onClick={() => handleRemove(item.cartItemId)}
+                    disabled={removingId === item.cartItemId}
+                  >
+                    {removingId === item.cartItemId ? "Removing..." : "Remove"}
+                  </button>
 
-          </div>
-        )}
-
-        {/* Empty Cart */}
-        {!loading && !error && cartItems.length === 0 && (
-          <div className="cart-empty">
-
-            <div className="cart-empty-icon">
-              🛒
+                </div>
+              ))}
             </div>
+          )}
 
-            <h3 className="cart-empty-title">
-              Your cart is empty
-            </h3>
+          {/* EMPTY CART */}
+          {!loading && !error && cartItems.length === 0 && (
+            <div className="empty-services">
+              <div>🛒</div>
 
-            <p className="cart-empty-text">
-              Add a service to see it here.
-            </p>
+              <h3>Your cart is empty</h3>
 
+              <p>Add a service to see it here.</p>
+
+              <Link to="/services">
+                <button>Browse Services</button>
+              </Link>
+            </div>
+          )}
+
+          {/* FOOTER ACTIONS */}
+          <div className="cart-actions">
+            <Link to="/services">
+              <button className="cart-view-services-button">
+                View All Services
+              </button>
+            </Link>
+
+            <Link to="/">
+              <button className="back-home-button">Back to Home</button>
+            </Link>
           </div>
-        )}
-
-        {/* Footer Actions */}
-        <div className="cart-actions">
-
-          <Link to="/services">
-            <button className="cart-button cart-button-primary">
-              View All Services
-            </button>
-          </Link>
-
-          <Link to="/">
-            <button className="cart-button cart-button-secondary">
-              Back to Home
-            </button>
-          </Link>
 
         </div>
-
-      </div>
+      </section>
     </div>
   );
 };
