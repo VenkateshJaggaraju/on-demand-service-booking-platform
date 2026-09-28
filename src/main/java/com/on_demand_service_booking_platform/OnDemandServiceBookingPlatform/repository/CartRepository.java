@@ -11,7 +11,12 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Query("SELECT COUNT(c) > 0 FROM Cart c WHERE c.customerId = :customerId AND c.service.id = :serviceId")
     boolean existsByCustomerIdAndServiceId(@Param("customerId") Long customerId,
-                                            @Param("serviceId") Long serviceId);
+                                           @Param("serviceId") Long serviceId);
 
-    List<Cart> findByCustomerId(Long customerId);
+    @Query("SELECT c FROM Cart c JOIN FETCH c.service WHERE c.customerId = :customerId")
+    List<Cart> findByCustomerId(@Param("customerId") Long customerId);
+
+    @Query("SELECT c FROM Cart c JOIN FETCH c.service WHERE c.id = :cartItemId AND c.customerId = :customerId")
+    Cart findByCartIdAndCustomerId(@Param("cartItemId") Long cartItemId,
+                                   @Param("customerId") Long customerId);
 }

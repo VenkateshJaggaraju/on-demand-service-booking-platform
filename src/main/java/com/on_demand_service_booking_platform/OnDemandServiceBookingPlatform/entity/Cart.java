@@ -17,7 +17,7 @@ public class Cart {
 
     private Long customerId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "services_id")
     private Services service;//here it is foreign key
     //When you call cart.getService(), it loads the full Services entity through that key.

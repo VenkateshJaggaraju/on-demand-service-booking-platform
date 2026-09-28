@@ -10,8 +10,11 @@ import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.rep
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.CustomerRepository;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -85,5 +88,19 @@ public class CustomerService {
          * map(cart -> cartMapper.toResponseDTO(cart))
          *
          */
+    }
+
+    @Transactional
+    public CartItemResponseDTO removeFromCart(Long cartItemId, Long customerId) {
+
+        Cart cart=cartRepository.findByCartIdAndCustomerId(cartItemId, customerId);
+
+        if(cart== null){
+             throw new IllegalArgumentException("cart item not found");
+        }
+
+        CartItemResponseDTO removed = cartMapper.toResponseDTO(cart);
+        cartRepository.delete(cart);
+        return ResponseEntity.status(200).body(removed).getBody();
     }
 }

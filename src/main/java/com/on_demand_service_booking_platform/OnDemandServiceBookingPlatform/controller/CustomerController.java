@@ -42,6 +42,11 @@ public class CustomerController {
         return customerService.getCartItems(customerId);
     }
 
+    @DeleteMapping("/cart/{id}")// Cart.id
+    public CartItemResponseDTO removeFromCart(@PathVariable("id") Long cartItemId, @RequestParam Long customerId){
+        return customerService.removeFromCart(cartItemId, customerId);
+    }
+
     @GetMapping("/payments")
     public String payment(){
         return "payment api";
