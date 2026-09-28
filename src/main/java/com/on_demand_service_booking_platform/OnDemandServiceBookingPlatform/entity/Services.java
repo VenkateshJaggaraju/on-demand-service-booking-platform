@@ -28,7 +28,7 @@ public class Services {
     private String icon;
     private String category;
 
-    @ManyToMany(mappedBy = "service")
+    @OneToMany(mappedBy = "service")
     private List<Booking> bookings;
 
     /*
