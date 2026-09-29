@@ -1,9 +1,12 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.controller;
 
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.*;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.BookingService;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private BookingService bookingService;
 
     //    @PostMapping(value = "/register", consumes = "multipart/form-data")
     @PostMapping(value = "/register")
@@ -46,6 +52,19 @@ public class CustomerController {
     public CartItemResponseDTO removeFromCart(@PathVariable("id") Long cartItemId, @RequestParam Long customerId){
         return customerService.removeFromCart(cartItemId, customerId);
     }
+
+    @PostMapping("/booking")
+    public ResponseEntity<BookingResponseDTO> createBooking(@RequestBody BookingRequestDTO request, Authentication authentication){
+//        Authentication gives the currently loginned user
+        return bookingService.createBooking(request, authentication);
+    }
+
+    @GetMapping("/booking")
+    public ResponseEntity<List<BookingResponseDTO>> getBookings(Authentication authentication){
+        return bookingService.getBookings(authentication);
+    }
+
+    // Booknow(customerController) [BookingStatus=null] --> Payment(SericeProviderController) [BookingStatus=actual]
 
     @GetMapping("/payments")
     public String payment(){

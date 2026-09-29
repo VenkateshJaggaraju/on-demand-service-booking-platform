@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -31,7 +32,7 @@ public class Booking {
 
     private LocalDate bookingDate;
 
-    private LocalDate bookingTime;
+    private LocalTime bookingTime;
 
     private String address;
 
@@ -41,5 +42,11 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)//without this JPA can store these indexes
     @Column(nullable = false)
-    private BookingStatus status= BookingStatus.PENDING;
+    private BookingStatus status;
+
+    @Version
+    @Column(nullable = false)
+    private Long version;// Optimistic locking strategy
 }
+
+// restriction only one user can book the service (at available time)

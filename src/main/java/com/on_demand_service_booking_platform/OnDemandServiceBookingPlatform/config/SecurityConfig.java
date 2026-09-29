@@ -87,6 +87,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/customer/cart/{id}")
                         .authenticated()
 
+                        .requestMatchers(HttpMethod.POST, "/customer/booking")
+                        .authenticated()
+
+                        .requestMatchers(HttpMethod.GET, "/customer/booking")
+                        .authenticated()
+
                         //Role-based api's
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")
