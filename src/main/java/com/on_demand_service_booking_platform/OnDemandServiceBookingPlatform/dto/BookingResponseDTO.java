@@ -22,13 +22,13 @@ public class BookingResponseDTO {
 
     private String serviceId;
     private String serviceName;
-    private String servicePrice;
+    private Integer servicePrice;
 
     private LocalDate bookingDate;
     private LocalTime bookingTime;
 
     private String address;
-    private Long totaAmount;
+    private Double totalAmount;
     private String reason;
 
     private BookingStatus status;
