@@ -13,6 +13,8 @@ import { ServiceProviderLogin } from "./service-provider/ServiceProviderLogin";
 import { ProvideServices } from "./services/ProvideServices";
 import { Cart } from "./cart/Cart";
 import {AxiosSetup} from "./utils/AxiosSetup";
+import {Payment} from "./payments/Payment";
+
 
 AxiosSetup();
 
@@ -95,6 +97,16 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
+
+  {
+    path: "/payment/:bookingId",
+    element: (
+      <PrivateRoute role="CUSTOMER">
+        <Payment />
+      </PrivateRoute>
+    ),
+  },
+
 ]);
 
 function App() {

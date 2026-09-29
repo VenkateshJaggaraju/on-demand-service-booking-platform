@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+.payment-container {
+  @apply min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10;
+}
+
+.payment-card {
+  @apply w-full max-w-md rounded-2xl bg-white p-8 shadow-xl;
+}
+
+.payment-header {
+  @apply mb-8 text-center;
+}
+
+.payment-icon {
+  @apply mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 text-3xl;
+}
+
+.payment-title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.payment-subtitle {
+  @apply mt-2 text-sm text-gray-500;
+}
+
+.payment-details {
+  @apply rounded-xl border border-gray-200 bg-gray-50 p-5;
+}
+
+.payment-row {
+  @apply flex items-center justify-between gap-4 py-2;
+}
+
+.payment-label {
+  @apply text-sm font-medium text-gray-500;
+}
+
+.payment-value {
+  @apply text-sm font-semibold text-gray-900 text-right;
+}
+
+.payment-divider {
+  @apply my-3 border-t border-gray-200;
+}
+
+.payment-total {
+  @apply flex items-center justify-between text-lg font-bold text-gray-900;
+}
+
+.payment-error {
+  @apply mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700;
+}
+
+.payment-button {
+  @apply mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3.5 text-base font-semibold text-white transition duration-200 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.payment-spinner {
+  @apply h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent;
+}
+
+.payment-security {
+  @apply mt-5 flex items-center justify-center gap-2 text-center text-xs text-gray-500;
+}
+
+@media (max-width: 640px) {
+  .payment-card {
+    @apply p-6;
+  }
+
+  .payment-title {
+    @apply text-xl;
+  }
+
+  .payment-row {
+    @apply items-start;
+  }
+}

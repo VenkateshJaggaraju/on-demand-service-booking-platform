@@ -634,16 +634,17 @@ export const Services: React.FC = () => {
 
                       {/* BOOK NOW */}
 
-                      <button
-                        onClick={() =>
-                          handleBookNow(service)
-                        }
-                        className="book-service-button"
-                      >
-                        Book Now
-                        <span>→</span>
-                      </button>
-
+                      <Link to="/payment" state={{ service }}>
+                        <button
+                          onClick={() =>
+                            handleBookNow(service)
+                          }
+                          className="book-service-button"
+                        >
+                          Book Now
+                          <span>→</span>
+                        </button>
+                      </Link>
                     </div>
 
                   </div>
