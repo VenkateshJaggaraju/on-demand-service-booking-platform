@@ -76,7 +76,7 @@ public class BookingService {
         return ResponseEntity.status(200).body(response);
     }
 
-    public ResponseEntity<List<BookingResponseDTO>> getBookings(Authentication authentication) {
+    public ResponseEntity<List<BookingResponseDTO>> getCustomerBookings(Authentication authentication) {
         Long customerId=getCustomerId(authentication);
 
         List<BookingResponseDTO> response = bookingRepository.findByCustomerId(customerId)
@@ -86,7 +86,7 @@ public class BookingService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<BookingResponseDTO> getBooking(Long bookingId, Authentication authentication) {
+    public ResponseEntity<BookingResponseDTO> getCustomerBooking(Long bookingId, Authentication authentication) {
         Long customerId=getCustomerId(authentication);
 
         Booking booking=bookingRepository.findById(bookingId)
@@ -100,6 +100,24 @@ public class BookingService {
 
         return ResponseEntity.ok(response);
 
+    }
+
+    public ResponseEntity<List<BookingResponseDTO>> getServiceBookings(Long serviceId) {
+        List<BookingResponseDTO> response=bookingRepository.findByServiceId(serviceId)
+                                                            .stream()
+                                                            .map(bookingMapper::toResponseDTO)
+                                                            .toList();
+
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<List<BookingResponseDTO>> getPendingBookings(Long serviceId) {
+        List<BookingResponseDTO> response = bookingRepository.findByServiceIdAndStatus(serviceId, BookingStatus.PENDING)
+                .stream()
+                .map(bookingMapper::toResponseDTO)
+                .toList();
+
+        return ResponseEntity.ok(response);
     }
 
     private Long getCustomerId(Authentication authentication) {

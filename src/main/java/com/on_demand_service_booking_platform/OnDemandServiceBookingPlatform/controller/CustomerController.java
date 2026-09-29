@@ -60,15 +60,15 @@ public class CustomerController {
     }
 
     @GetMapping("/booking")
-    public ResponseEntity<List<BookingResponseDTO>> getBookings(Authentication authentication){
-        return bookingService.getBookings(authentication);
+    public ResponseEntity<List<BookingResponseDTO>> getCustomerBookings(Authentication authentication){
+        return bookingService.getCustomerBookings(authentication);
     }
 
     // Booknow(customerController) [BookingStatus=null] --> Payment(SericeProviderController) [BookingStatus=actual]
 
     @GetMapping("booking/{id}")
-    public ResponseEntity<BookingResponseDTO> getBooking(@PathVariable("id") Long bookingId, Authentication authentication){
-        return bookingService.getBooking(bookingId, authentication);
+    public ResponseEntity<BookingResponseDTO> getCustomerBooking(@PathVariable("id") Long bookingId, Authentication authentication){
+        return bookingService.getCustomerBooking(bookingId, authentication);
     }
 
     @GetMapping("/payments")

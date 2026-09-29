@@ -96,6 +96,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/customer/booking/{id}")
                         .authenticated()
 
+                        .requestMatchers(HttpMethod.GET, "/service-provider/booking")
+                        .authenticated()
+
+                        .requestMatchers(HttpMethod.GET, "/service-provider/booking/service/{id}/pending")
+                        .authenticated()
+
+
                         //Role-based api's
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")

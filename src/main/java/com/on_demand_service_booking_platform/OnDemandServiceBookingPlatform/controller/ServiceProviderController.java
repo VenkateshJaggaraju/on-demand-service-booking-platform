@@ -2,11 +2,15 @@ package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.co
 
 
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.*;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.BookingService;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.ServiceProviderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/service-provider")
@@ -16,6 +20,9 @@ public class ServiceProviderController {
 
     @Autowired
     private ServiceProviderService serviceProviderService;
+
+    @Autowired
+    private BookingService bookingService;
 
     @PostMapping("/register")
     public ServiceProviderResponseDTO register(@RequestBody ServiceProviderRequestDTO dto) {
@@ -54,6 +61,16 @@ public class ServiceProviderController {
             @RequestParam(defaultValue = "1") int page) {
         int zeroIndexedPage = Math.max(page - 1, 0);
         return serviceProviderService.searchServices(name, minPrice, maxPrice, zeroIndexedPage);
+    }
+
+    @GetMapping("/booking")
+    public ResponseEntity<List<BookingResponseDTO>> getServiceBookings(@RequestParam("id") Long serviceId){
+        return bookingService.getServiceBookings(serviceId);
+    }
+
+    @GetMapping("/booking/service/{id}/pending")
+    public ResponseEntity<List<BookingResponseDTO>> getPendingBookings(@PathVariable("id") Long serviceId){
+        return bookingService.getPendingBookings(serviceId);
     }
 
     @PostMapping("/logout")
