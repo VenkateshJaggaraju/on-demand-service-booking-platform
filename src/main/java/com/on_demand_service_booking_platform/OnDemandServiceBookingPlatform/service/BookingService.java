@@ -66,7 +66,7 @@ public class BookingService {
         booking.setService(service);
         booking.setBookingDate(bookingDate);
         booking.setBookingTime(bookingTime);
-        booking.setTotalAmount((Double) (service.getPrice()+300.0));// SellingPrice from UI
+        booking.setTotalAmount(service.getPrice()+300.0);// SellingPrice from UI
         booking.setAddress(request.getAddress());
         booking.setReason("you are started booking now");
         booking.setStatus(BookingStatus.PENDING);
@@ -86,8 +86,23 @@ public class BookingService {
         return ResponseEntity.ok(response);
     }
 
+    public ResponseEntity<BookingResponseDTO> getBooking(Long bookingId, Authentication authentication) {
+        Long customerId=getCustomerId(authentication);
+
+        Booking booking=bookingRepository.findById(bookingId)
+                .orElseThrow(()-> new RuntimeException("Booking not found"));
+
+        if(!booking.getCustomer().getId().equals(customerId)){
+            throw new RuntimeException("You are not allowed to access this booking");
+        }
+
+        BookingResponseDTO response=bookingMapper.toResponseDTO(booking);
+
+        return ResponseEntity.ok(response);
+
+    }
+
     private Long getCustomerId(Authentication authentication) {
-//        String username=authentication.getName();
         Customer customer=customerRepository.findByUsername(authentication.getName());
         return customer.getId();
     }

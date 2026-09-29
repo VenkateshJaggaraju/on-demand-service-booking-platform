@@ -66,6 +66,11 @@ public class CustomerController {
 
     // Booknow(customerController) [BookingStatus=null] --> Payment(SericeProviderController) [BookingStatus=actual]
 
+    @GetMapping("booking/{id}")
+    public ResponseEntity<BookingResponseDTO> getBooking(@PathVariable("id") Long bookingId, Authentication authentication){
+        return bookingService.getBooking(bookingId, authentication);
+    }
+
     @GetMapping("/payments")
     public String payment(){
         return "payment api";

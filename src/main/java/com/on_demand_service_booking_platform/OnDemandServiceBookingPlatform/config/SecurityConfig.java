@@ -93,6 +93,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/customer/booking")
                         .authenticated()
 
+                        .requestMatchers(HttpMethod.GET, "/customer/booking/{id}")
+                        .authenticated()
+
                         //Role-based api's
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")
