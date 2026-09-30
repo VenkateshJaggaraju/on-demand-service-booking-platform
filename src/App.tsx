@@ -14,7 +14,7 @@ import { ProvideServices } from "./services/ProvideServices";
 import { Cart } from "./cart/Cart";
 import {AxiosSetup} from "./utils/AxiosSetup";
 import {Payment} from "./payments/Payment";
-
+import { ServiceProviderStats } from "./statistics/ServiceProviderStats";
 
 AxiosSetup();
 
@@ -76,6 +76,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+
     ],
   },
 
@@ -105,6 +106,11 @@ const router = createBrowserRouter([
         <Payment />
       </PrivateRoute>
     ),
+  },
+
+  {
+    path: "/service-provider/stats",
+    element: <ServiceProviderStats />
   },
 
 ]);

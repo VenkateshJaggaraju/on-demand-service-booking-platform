@@ -1,0 +1,429 @@
+
+@reference "tailwindcss";
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.stats-page {
+  @apply min-h-screen mx-auto max-w-[1600px] px-4 py-8 text-slate-800
+         sm:px-6 lg:px-8;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.stats-header {
+  @apply relative mb-7 flex flex-wrap items-center justify-between
+         gap-5 overflow-hidden rounded-3xl border border-slate-200
+         bg-white px-6 py-6 shadow-lg
+         sm:px-8;
+}
+
+.stats-header::before {
+  content: "";
+  @apply absolute left-0 top-0 h-1 w-full
+         bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600;
+}
+
+.stats-header::after {
+  content: "";
+  @apply pointer-events-none absolute -right-20 -top-24
+         size-64 rounded-full bg-teal-100/50 blur-3xl;
+}
+
+.stats-title {
+  @apply relative z-10 text-2xl font-bold tracking-tight text-slate-900
+         sm:text-3xl;
+}
+
+.stats-title::after {
+  content: "";
+  @apply mt-2 block h-1 w-14 rounded-full
+         bg-gradient-to-r from-teal-500 to-cyan-500;
+}
+
+.stats-refresh {
+  @apply relative z-10 inline-flex items-center gap-2 rounded-xl
+         bg-gradient-to-r from-teal-600 to-cyan-600
+         px-5 py-2.5 text-sm font-semibold text-white
+         shadow-md transition-all duration-300
+         hover:-translate-y-0.5 hover:from-teal-700 hover:to-cyan-700
+         hover:shadow-lg
+         active:translate-y-0
+         disabled:cursor-not-allowed disabled:opacity-50
+         focus-visible:outline-2 focus-visible:outline-offset-2
+         focus-visible:outline-teal-600;
+}
+
+.stats-refresh:disabled::before {
+  content: "";
+  @apply size-4 rounded-full border-2 border-white/30 border-t-white;
+  animation: stats-spin 0.7s linear infinite;
+}
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.stats-tabs {
+  @apply mb-5 inline-flex max-w-full gap-1.5 overflow-x-auto
+         rounded-2xl border border-slate-200
+         bg-white p-1.5 shadow-md;
+}
+
+.stats-tab {
+  @apply flex items-center gap-2 whitespace-nowrap rounded-xl
+         px-5 py-2.5 text-sm font-semibold text-slate-500
+         transition-all duration-300
+         hover:bg-slate-50 hover:text-slate-900
+         focus-visible:outline-2 focus-visible:outline-offset-2
+         focus-visible:outline-teal-600;
+}
+
+.stats-tab--active {
+  @apply bg-gradient-to-r from-teal-600 to-cyan-600
+         text-white shadow-md;
+}
+
+.stats-count {
+  @apply min-w-7 rounded-full bg-slate-100
+         px-2 py-0.5 text-center text-xs font-bold
+         tabular-nums text-slate-600 transition-colors;
+}
+
+.stats-tab--active .stats-count {
+  @apply bg-white/20 text-white;
+}
+
+/* =========================================================
+   PANEL
+   ========================================================= */
+
+.stats-panel {
+  @apply overflow-hidden rounded-3xl border border-slate-200
+         bg-white shadow-xl;
+}
+
+.stats-scroll {
+  @apply max-h-[70vh] overflow-auto rounded-3xl;
+  animation: stats-reveal 0.35s ease-out;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Chrome / Edge / Safari scrollbar */
+
+.stats-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.stats-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.stats-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #cbd5e1;
+}
+
+.stats-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.stats-table {
+  @apply w-full border-separate border-spacing-0
+         text-left text-sm;
+}
+
+.stats-table th {
+  @apply sticky top-0 z-20 whitespace-nowrap
+         border-b border-slate-200
+         bg-gradient-to-r from-slate-50 to-slate-100
+         px-5 py-4
+         text-xs font-bold uppercase tracking-wider
+         text-slate-500 backdrop-blur-xl;
+}
+
+.stats-table td {
+  @apply border-b border-slate-100
+         px-5 py-4 align-middle;
+}
+
+.stats-table tbody tr {
+  @apply transition-all duration-200;
+}
+
+.stats-table tbody tr:nth-child(even) td {
+  @apply bg-slate-50/40;
+}
+
+.stats-table tbody tr:hover td {
+  @apply bg-teal-50/70;
+}
+
+.stats-table tbody tr:hover {
+  transform: translateY(-1px);
+}
+
+.stats-table tbody tr:last-child td {
+  @apply border-b-0;
+}
+
+.stats-table td:first-child,
+.stats-table th:first-child {
+  @apply pl-6 text-slate-400 tabular-nums;
+}
+
+.stats-table th:last-child,
+.stats-table td:last-child {
+  @apply pr-6;
+}
+
+.stats-table .num {
+  @apply text-right tabular-nums font-medium;
+}
+
+.stats-table .strong {
+  @apply font-semibold text-slate-900;
+}
+
+.stats-table .wide {
+  @apply min-w-56 max-w-sm leading-relaxed text-slate-600;
+}
+
+.stats-sub {
+  @apply mt-1 text-xs text-slate-400;
+}
+
+.stats-icon {
+  @apply mr-2 inline-flex size-8 items-center justify-center
+         rounded-lg bg-gradient-to-br from-teal-50 to-cyan-50
+         text-teal-700 shadow-sm align-middle;
+}
+
+/* =========================================================
+   CUSTOMERS
+   ========================================================= */
+
+.stats-user {
+  @apply flex items-center gap-3;
+}
+
+.stats-avatar {
+  @apply size-9 shrink-0 rounded-full object-cover
+         ring-2 ring-white shadow-md;
+}
+
+.stats-avatar--letter {
+  @apply flex items-center justify-center
+         bg-gradient-to-br from-teal-400 to-cyan-500
+         text-sm font-bold text-white shadow-md;
+}
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.stats-badge {
+  @apply inline-flex items-center gap-2 whitespace-nowrap
+         rounded-full px-3 py-1.5 text-xs font-bold
+         ring-1 ring-inset shadow-sm;
+}
+
+.stats-badge::before {
+  content: "";
+  @apply size-2 rounded-full bg-current;
+}
+
+/* Good */
+
+.stats-badge--good {
+  @apply bg-emerald-50 text-emerald-700 ring-emerald-200;
+}
+
+/* Bad */
+
+.stats-badge--bad {
+  @apply bg-rose-50 text-rose-700 ring-rose-200;
+}
+
+/* Waiting */
+
+.stats-badge--wait {
+  @apply bg-amber-50 text-amber-700 ring-amber-200;
+}
+
+/* None */
+
+.stats-badge--none {
+  @apply bg-slate-100 text-slate-600 ring-slate-200;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.stats-empty {
+  @apply m-5 rounded-2xl border-2 border-dashed
+         border-slate-200 bg-gradient-to-br
+         from-slate-50 to-white
+         px-6 py-16 text-center text-sm text-slate-500;
+}
+
+.stats-empty::before {
+  content: "📊";
+  @apply mb-4 block text-5xl;
+}
+
+.stats-empty strong {
+  @apply block text-lg font-bold text-slate-800;
+}
+
+/* =========================================================
+   ERROR STATE
+   ========================================================= */
+
+.stats-error {
+  @apply m-5 flex flex-wrap items-center justify-between
+         gap-4 rounded-2xl border border-rose-200
+         bg-gradient-to-r from-rose-50 to-red-50
+         px-5 py-4 text-sm text-rose-800 shadow-sm;
+}
+
+.stats-error button {
+  @apply rounded-xl border border-rose-300
+         bg-white px-4 py-2 font-semibold
+         text-rose-700 shadow-sm
+         transition-all duration-200
+         hover:-translate-y-0.5 hover:bg-rose-100
+         hover:shadow-md
+         focus-visible:outline-2
+         focus-visible:outline-offset-2
+         focus-visible:outline-rose-600;
+}
+
+/* =========================================================
+   TABLE ROW ANIMATION
+   ========================================================= */
+
+.stats-table tbody tr {
+  animation: stats-row-in 0.35s ease both;
+}
+
+.stats-table tbody tr:nth-child(1) {
+  animation-delay: 0.03s;
+}
+
+.stats-table tbody tr:nth-child(2) {
+  animation-delay: 0.06s;
+}
+
+.stats-table tbody tr:nth-child(3) {
+  animation-delay: 0.09s;
+}
+
+.stats-table tbody tr:nth-child(4) {
+  animation-delay: 0.12s;
+}
+
+.stats-table tbody tr:nth-child(5) {
+  animation-delay: 0.15s;
+}
+
+/* =========================================================
+   MOTION
+   ========================================================= */
+
+@keyframes stats-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes stats-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stats-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .stats-page {
+    @apply px-3 py-5;
+  }
+
+  .stats-header {
+    @apply rounded-2xl px-5 py-5;
+  }
+
+  .stats-title {
+    @apply text-2xl;
+  }
+
+  .stats-refresh {
+    @apply w-full justify-center;
+  }
+
+  .stats-tabs {
+    @apply flex w-full;
+  }
+
+  .stats-tab {
+    @apply flex-1 justify-center px-3;
+  }
+
+  .stats-panel,
+  .stats-scroll {
+    @apply rounded-2xl;
+  }
+
+  .stats-table th,
+  .stats-table td {
+    @apply px-4;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-scroll,
+  .stats-refresh:disabled::before,
+  .stats-table tbody tr {
+    animation: none;
+  }
+
+  .stats-table tbody tr {
+    transform: none;
+  }
+}

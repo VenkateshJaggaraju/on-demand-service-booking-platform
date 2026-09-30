@@ -1,45 +1,61 @@
-    import { useNavigate } from "react-router-dom";
-    import "./ProvideServices.css";
 
-    export const ProvideServices = () => {
-    const navigate = useNavigate();
+import { useNavigate } from "react-router-dom";
+import "./ProvideServices.css";
 
-    const handleProvideService = () => {
-        navigate("/service-provider/add");
-    };
+export const ProvideServices = () => {
+  const navigate = useNavigate();
 
-    return (
-        <div className="provide-services-page">
+  const handleProvideService = () => {
+    navigate("/service-provider/add");
+  };
 
-        <div className="provide-services-card">
+  const handleViewStats = () => {
+    navigate("/service-provider/stats");
+  };
 
-            <div className="provide-services-icon">
-            🛠️
-            </div>
+  return (
+    <div className="provide-services-page">
 
-            <h1 className="provide-services-title">
-            Provide Your Service
-            </h1>
+      <div className="provide-services-card">
 
-            <p className="provide-services-description">
-            Share your professional services with customers and
-            start receiving service requests.
-            </p>
-
-            <button
-            className="provide-services-button"
-            onClick={handleProvideService}
-            >
-            <span>＋</span>
-            Provide Service
-            </button><br />
-
-            <button onClick={() => navigate("/")}>
-            Back to Home
-            </button>
-
+        <div className="provide-services-icon">
+          🛠️
         </div>
 
-        </div>
-    );
-    };
+        <h1 className="provide-services-title">
+          Provide Your Service
+        </h1>
+
+        <p className="provide-services-description">
+          Share your professional services with customers and
+          start receiving service requests.
+        </p>
+
+        <button
+          className="provide-services-button"
+          onClick={handleProvideService}
+        >
+          <span>＋</span>
+          Provide Service
+        </button>
+
+        <button
+          className="view-stats-button"
+          onClick={handleViewStats}
+        >
+          <span>📊</span>
+          View Stats
+        </button>
+
+        <button
+          className="back-home-button"
+          onClick={() => navigate("/")}
+        >
+          Back to Home
+        </button>
+
+      </div>
+
+    </div>
+  );
+};
