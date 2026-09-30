@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import axios from "axios";
 import "./ServiceProviderStats.css";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = "http://localhost:1086";
 
@@ -20,6 +21,11 @@ type BookingStatus = (typeof STATUSES)[number];
 
 const REASON_MIN = 5;
 const REASON_MAX = 255;
+
+// Blue bubbles 1-10 and green bubbles 11-20; in each colour, 5 flow forward
+// and 5 flow in reverse (positions and speeds are set in the CSS via nth-child).
+const BLUE_BUBBLES = 10;
+const GREEN_BUBBLES = 10;
 
 interface ServiceRow {
   id: number;
@@ -105,6 +111,19 @@ const validateReason = (raw: string) => {
 
 function Empty({ label }: { label: string }) {
   return <p className="stats-empty">No {label} yet.</p>;
+}
+
+function WaterBubbles() {
+  return (
+    <div className="stats-bubbles" aria-hidden="true">
+      {Array.from({ length: BLUE_BUBBLES }, (_, i) => (
+        <span key={`blue-${i}`} className="stats-bubble" />
+      ))}
+      {Array.from({ length: GREEN_BUBBLES }, (_, i) => (
+        <span key={`green-${i}`} className="stats-bubble stats-bubble--green" />
+      ))}
+    </div>
+  );
 }
 
 function ServicesTable({ rows }: { rows: ServiceRow[] }) {
@@ -387,6 +406,8 @@ export const ServiceProviderStats = () => {
     null
   );
 
+  const navigate = useNavigate();
+
   const load = useCallback(async (key: TabKey) => {
     const { path } = TABS.find((t) => t.key === key)!;
     setLoading(true);
@@ -419,6 +440,8 @@ export const ServiceProviderStats = () => {
 
   return (
     <div className="stats-page">
+      <WaterBubbles />
+
       <header className="stats-header">
         <h1 className="stats-title">Platform overview</h1>
         <button
@@ -484,11 +507,11 @@ export const ServiceProviderStats = () => {
         />
       )}
       <button
-          className="back-home-button"
-          onClick={() => navigate("/")}
-        >
-          Back to Home
-        </button>
+        className="back-home-button"
+        onClick={() => navigate("/")}
+      >
+        Back to Home
+      </button>
     </div>
   );
 };

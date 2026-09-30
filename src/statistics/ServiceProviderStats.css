@@ -1,4 +1,3 @@
-
 /* =========================================================
    Tailwind v4
    ========================================================= */
@@ -10,28 +9,147 @@
    ========================================================= */
 
 .stats-page {
-  @apply min-h-screen mx-auto max-w-[1600px] px-4 py-8
-         text-slate-800 sm:px-6 lg:px-8;
+  @apply relative min-h-screen mx-auto max-w-[1600px] px-4 py-8
+         overflow-hidden text-slate-800 sm:px-6 lg:px-8;
+
+  background:
+    radial-gradient(circle at 10% 15%, rgba(56, 189, 248, 0.25), transparent 25%),
+    radial-gradient(circle at 90% 10%, rgba(14, 165, 233, 0.22), transparent 27%),
+    radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.18), transparent 30%),
+    radial-gradient(circle at 15% 90%, rgba(59, 130, 246, 0.16), transparent 28%),
+    linear-gradient(
+      135deg,
+      #e0f7ff 0%,
+      #dff6ff 20%,
+      #effaff 45%,
+      #e0f2fe 70%,
+      #dbeafe 100%
+    );
+
+  background-attachment: fixed;
 }
+
+/* =========================================================
+   WATER BUBBLES (10 small, thick bubbles: 5 forward, 5 reverse)
+   Markup: <div class="stats-bubbles" aria-hidden="true">
+             10 x <span class="stats-bubble"></span>
+           </div>
+   ========================================================= */
+
+.stats-bubbles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.stats-bubble {
+  position: absolute;
+  width: var(--size, 40px);
+  height: var(--size, 40px);
+  border-radius: 9999px;
+
+  background:
+    radial-gradient(
+      circle at 30% 26%,
+      rgba(255, 255, 255, 0.95) 0 9%,
+      rgba(255, 255, 255, 0) 24%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(186, 230, 253, 0.55) 0%,
+      rgba(56, 189, 248, 0.5) 60%,
+      rgba(2, 132, 199, 0.6) 100%
+    );
+
+  border: 2px solid rgba(255, 255, 255, 0.85);
+
+  box-shadow:
+    inset 0 -6px 10px rgba(2, 132, 199, 0.35),
+    inset 0 4px 8px rgba(255, 255, 255, 0.7),
+    0 6px 14px rgba(14, 165, 233, 0.3);
+
+  will-change: transform;
+  animation: var(--anim, bubble-flow) var(--dur, 22s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* ---- 5 natural flow (left -> right) ---- */
+.stats-bubble:nth-child(1) { --size: 34px; --dur: 20s; --delay: -3s;  --dx: 78vw; --dy: 14vh; left: 2%;  top: 12%; }
+.stats-bubble:nth-child(2) { --size: 56px; --dur: 26s; --delay: -9s;  --dx: 70vw; --dy: 18vh; left: 6%;  top: 32%; }
+.stats-bubble:nth-child(3) { --size: 26px; --dur: 17s; --delay: -6s;  --dx: 85vw; --dy: 10vh; left: 10%; top: 52%; }
+.stats-bubble:nth-child(4) { --size: 70px; --dur: 30s; --delay: -14s; --dx: 65vw; --dy: 16vh; left: 4%;  top: 72%; }
+.stats-bubble:nth-child(5) { --size: 44px; --dur: 23s; --delay: -11s; --dx: 80vw; --dy: 12vh; left: 12%; top: 88%; }
+
+/* ---- 5 reverse flow (right -> left) ---- */
+.stats-bubble:nth-child(n + 6):nth-child(-n + 10),
+.stats-bubble:nth-child(n + 16) { --anim: bubble-flow-reverse; }
+
+.stats-bubble:nth-child(6)  { --size: 48px; --dur: 24s; --delay: -5s;  --dx: 75vw; --dy: 15vh; left: 94%; top: 20%; }
+.stats-bubble:nth-child(7)  { --size: 30px; --dur: 19s; --delay: -12s; --dx: 82vw; --dy: 11vh; left: 90%; top: 40%; }
+.stats-bubble:nth-child(8)  { --size: 64px; --dur: 29s; --delay: -8s;  --dx: 68vw; --dy: 17vh; left: 96%; top: 60%; }
+.stats-bubble:nth-child(9)  { --size: 38px; --dur: 21s; --delay: -15s; --dx: 78vw; --dy: 13vh; left: 88%; top: 80%; }
+.stats-bubble:nth-child(10) { --size: 52px; --dur: 27s; --delay: -2s;  --dx: 72vw; --dy: 16vh; left: 92%; top: 94%; }
+
+/* =========================================================
+   GREEN WATER BUBBLES (bubbles 11-20: 5 forward, 5 reverse)
+   ========================================================= */
+
+.stats-bubble--green {
+  background:
+    radial-gradient(
+      circle at 30% 26%,
+      rgba(255, 255, 255, 0.95) 0 9%,
+      rgba(255, 255, 255, 0) 24%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(187, 247, 208, 0.55) 0%,
+      rgba(74, 222, 128, 0.5) 60%,
+      rgba(22, 163, 74, 0.6) 100%
+    );
+
+  box-shadow:
+    inset 0 -6px 10px rgba(22, 163, 74, 0.35),
+    inset 0 4px 8px rgba(255, 255, 255, 0.7),
+    0 6px 14px rgba(34, 197, 94, 0.3);
+}
+
+/* ---- 5 natural flow (left -> right) ---- */
+.stats-bubble:nth-child(11) { --size: 40px; --dur: 25s; --delay: -7s;  --dx: 74vw; --dy: 13vh; left: 8%;  top: 22%; }
+.stats-bubble:nth-child(12) { --size: 28px; --dur: 18s; --delay: -13s; --dx: 84vw; --dy: 11vh; left: 14%; top: 42%; }
+.stats-bubble:nth-child(13) { --size: 60px; --dur: 28s; --delay: -4s;  --dx: 68vw; --dy: 17vh; left: 3%;  top: 62%; }
+.stats-bubble:nth-child(14) { --size: 36px; --dur: 21s; --delay: -16s; --dx: 80vw; --dy: 14vh; left: 16%; top: 80%; }
+.stats-bubble:nth-child(15) { --size: 50px; --dur: 27s; --delay: -10s; --dx: 72vw; --dy: 15vh; left: 7%;  top: 6%; }
+
+/* ---- 5 reverse flow (right -> left) ---- */
+.stats-bubble:nth-child(16) { --size: 32px; --dur: 20s; --delay: -9s;  --dx: 80vw; --dy: 12vh; left: 92%; top: 8%; }
+.stats-bubble:nth-child(17) { --size: 58px; --dur: 29s; --delay: -1s;  --dx: 70vw; --dy: 16vh; left: 86%; top: 30%; }
+.stats-bubble:nth-child(18) { --size: 42px; --dur: 23s; --delay: -14s; --dx: 76vw; --dy: 13vh; left: 97%; top: 50%; }
+.stats-bubble:nth-child(19) { --size: 27px; --dur: 17s; --delay: -6s;  --dx: 85vw; --dy: 10vh; left: 89%; top: 70%; }
+.stats-bubble:nth-child(20) { --size: 66px; --dur: 31s; --delay: -18s; --dx: 66vw; --dy: 18vh; left: 93%; top: 88%; }
 
 /* =========================================================
    HEADER
    ========================================================= */
 
 .stats-header {
-  @apply relative mb-7 flex flex-wrap items-center justify-between
+  @apply relative z-20 mb-7 flex flex-wrap items-center justify-between
          gap-5 overflow-hidden rounded-3xl border border-slate-200
          bg-white px-6 py-6 shadow-lg sm:px-8;
 }
 
 .stats-header::before {
   content: "";
+
   @apply absolute left-0 top-0 h-1 w-full
          bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600;
 }
 
 .stats-header::after {
   content: "";
+
   @apply pointer-events-none absolute -right-20 -top-24
          size-64 rounded-full bg-teal-100/50 blur-3xl;
 }
@@ -43,6 +161,7 @@
 
 .stats-title::after {
   content: "";
+
   @apply mt-2 block h-1 w-14 rounded-full
          bg-gradient-to-r from-teal-500 to-cyan-500;
 }
@@ -65,6 +184,7 @@
 
 .stats-refresh:disabled::before {
   content: "";
+
   @apply size-4 rounded-full border-2
          border-white/30 border-t-white;
 
@@ -76,7 +196,7 @@
    ========================================================= */
 
 .stats-tabs {
-  @apply mb-5 inline-flex max-w-full gap-1.5 overflow-x-auto
+  @apply relative z-20 mb-5 inline-flex max-w-full gap-1.5 overflow-x-auto
          rounded-2xl border border-slate-200
          bg-white p-1.5 shadow-md;
 }
@@ -106,24 +226,40 @@
 }
 
 /* =========================================================
-   PANEL
+   PANEL (translucent glass so page bubbles show through)
    ========================================================= */
 
 .stats-panel {
-  @apply overflow-hidden rounded-3xl border border-slate-200
-         bg-white shadow-xl;
+  @apply relative z-10 overflow-hidden rounded-3xl
+         border border-white/80
+         bg-white/45 shadow-xl;
+
+  backdrop-filter: blur(2px) saturate(140%);
+
+  box-shadow:
+    0 20px 55px rgba(14, 165, 233, 0.12),
+    0 8px 25px rgba(37, 99, 235, 0.08);
 }
 
+/* Bubbles now live on the page, not inside the panel
+   (backdrop-filter would trap fixed children in the panel) */
+.stats-panel::before,
+.stats-panel::after {
+  content: none;
+}
+
+/* =========================================================
+   TABLE SCROLL
+   ========================================================= */
+
 .stats-scroll {
-  @apply max-h-[70vh] overflow-auto rounded-3xl;
+  @apply relative z-10 max-h-[70vh] overflow-auto rounded-3xl;
 
   animation: stats-reveal 0.35s ease-out;
 
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
 }
-
-/* Custom scrollbar */
 
 .stats-scroll::-webkit-scrollbar {
   width: 8px;
@@ -154,15 +290,16 @@
 
 .stats-table th {
   @apply sticky top-0 z-20 whitespace-nowrap
-         border-b border-slate-200
-         bg-gradient-to-r from-slate-50 to-slate-100
+         border-b border-slate-200/70
+         bg-white/50
          px-5 py-4
          text-xs font-bold uppercase tracking-wider
          text-slate-500 backdrop-blur-xl;
 }
 
 .stats-table td {
-  @apply border-b border-slate-100
+  @apply border-b border-slate-100/70
+         bg-transparent
          px-5 py-4 align-middle;
 }
 
@@ -171,11 +308,11 @@
 }
 
 .stats-table tbody tr:nth-child(even) td {
-  @apply bg-slate-50/40;
+  @apply bg-white/25;
 }
 
 .stats-table tbody tr:hover td {
-  @apply bg-teal-50/70;
+  @apply bg-teal-50/60;
 }
 
 .stats-table tbody tr:hover {
@@ -250,6 +387,7 @@
 
 .stats-badge::before {
   content: "";
+
   @apply size-2 rounded-full bg-current;
 }
 
@@ -328,6 +466,7 @@
 
 .stats-empty::before {
   content: "📊";
+
   @apply mb-4 block text-5xl;
 }
 
@@ -373,7 +512,7 @@
   @apply w-full max-w-md rounded-3xl
          border border-slate-200
          bg-white p-6 shadow-2xl;
-  
+
   animation: stats-dialog-in 0.25s ease-out;
 }
 
@@ -526,11 +665,28 @@
 }
 
 /* =========================================================
+   FLOWING WATER ANIMATIONS
+   ========================================================= */
+
+@keyframes bubble-flow {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(calc(var(--dx) * 0.5), calc(var(--dy) * -1), 0); }
+  50%      { transform: translate3d(var(--dx), 0, 0); }
+  75%      { transform: translate3d(calc(var(--dx) * 0.5), var(--dy), 0); }
+}
+
+@keyframes bubble-flow-reverse {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(calc(var(--dx) * -0.5), var(--dy), 0); }
+  50%      { transform: translate3d(calc(var(--dx) * -1), 0, 0); }
+  75%      { transform: translate3d(calc(var(--dx) * -0.5), calc(var(--dy) * -1), 0); }
+}
+
+/* =========================================================
    RESPONSIVE
    ========================================================= */
 
 @media (max-width: 768px) {
-
   .stats-page {
     @apply px-3 py-5;
   }
@@ -583,11 +739,11 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
   .stats-scroll,
   .stats-refresh:disabled::before,
   .stats-dialog,
-  .stats-table tbody tr {
+  .stats-table tbody tr,
+  .stats-bubble {
     animation: none;
   }
 
