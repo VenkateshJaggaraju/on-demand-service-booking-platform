@@ -22,7 +22,7 @@ public class GeneralController {
  * Rest of all other apis works in both Browser and Postman
  *
  * If ServiceProvider wants to see customers
- * then both Customer(login in new tab) and ServiceProvider have logins
+ * then both Customer(login in new tab) and ServiceProvider have logins (if the app is running on localhost)
  *
  * Postman(user) endpoints
  *

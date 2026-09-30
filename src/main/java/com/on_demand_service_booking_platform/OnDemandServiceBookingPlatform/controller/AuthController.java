@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.*;
 
 /*
  * Note:
- * Only one user can access this application at a time
+ * Only one user can access this application at a time, if the app is running on localhost
  */
 
 @RestController
