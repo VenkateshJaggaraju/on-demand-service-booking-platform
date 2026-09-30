@@ -33,13 +33,6 @@ export const PageNotFoundException = () => {
           </p>
 
           <div className="nf-actions">
-            <button
-              type="button"
-              className="nf-btn nf-btn-secondary"
-              onClick={() => navigate(-1)}
-            >
-              ← Go Back
-            </button>
 
             <Link to="/" className="nf-btn nf-btn-primary">
               Back to Home
