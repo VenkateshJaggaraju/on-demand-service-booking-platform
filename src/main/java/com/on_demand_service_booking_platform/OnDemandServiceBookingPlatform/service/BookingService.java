@@ -10,7 +10,7 @@ import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.map
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.BookingRepository;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.CustomerRepository;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -76,6 +76,12 @@ public class BookingService {
         return ResponseEntity.status(200).body(response);
     }
 
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<BookingResponseDTO>> getAllBookings() {
+        List<Booking> bookings = bookingRepository.findAllWithCustomerAndService();
+        return ResponseEntity.ok(bookingMapper.toResponseDTOList(bookings));
+    }
+
     public ResponseEntity<List<BookingResponseDTO>> getCustomerBookings(Authentication authentication) {
         Long customerId=getCustomerId(authentication);
 
@@ -120,8 +126,22 @@ public class BookingService {
         return ResponseEntity.ok(response);
     }
 
+    @Transactional
+    public ResponseEntity<BookingResponseDTO> updateStatus(Long bookingId, String reason, BookingStatus status) {
+        Booking booking=bookingRepository.findById(bookingId)
+                .orElseThrow(()-> new RuntimeException("Booking not found"));
+
+        booking.setReason(reason);
+        booking.setStatus(status);
+
+        BookingResponseDTO response = bookingMapper.toResponseDTO(bookingRepository.save(booking));
+
+        return ResponseEntity.ok(response);
+    }
+
     private Long getCustomerId(Authentication authentication) {
         Customer customer=customerRepository.findByUsername(authentication.getName());
         return customer.getId();
     }
+
 }

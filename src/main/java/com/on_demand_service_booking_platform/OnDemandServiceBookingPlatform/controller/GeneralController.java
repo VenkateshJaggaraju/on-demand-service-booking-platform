@@ -17,3 +17,24 @@ public class GeneralController {
     }
 
 }
+/* Note:
+ * The following apis are specifically dedicated to Postman;
+ * Rest of all other apis works in both Browser and Postman
+ *
+ * If ServiceProvider wants to see customers
+ * then both Customer(login in new tab) and ServiceProvider have logins
+ *
+ * Postman(user) endpoints
+ *
+ *      /admin/register
+ *
+ *      /customer/booking --> GET() and POST()
+ *      /customer/booking/{id}
+ *
+ *      /service-provider/booking
+ *      /service-provider/booking/service/{id}/pending
+ *      /service-provider/booking/{id}/status
+ *
+ *
+ *
+ */

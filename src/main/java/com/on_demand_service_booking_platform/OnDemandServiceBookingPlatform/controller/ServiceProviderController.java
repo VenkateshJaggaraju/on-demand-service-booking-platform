@@ -2,6 +2,7 @@ package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.co
 
 
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.*;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.enums.BookingStatus;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.BookingService;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.ServiceProviderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,6 +64,16 @@ public class ServiceProviderController {
         return serviceProviderService.searchServices(name, minPrice, maxPrice, zeroIndexedPage);
     }
 
+    @GetMapping("/all-services")
+    public ResponseEntity<List<ServiceResponseDTO>> getAllCustomers(){
+        return serviceProviderService.getAllServices();
+    }
+
+    @GetMapping("/all-bookings")
+    public ResponseEntity<List<BookingResponseDTO>> getAllBookings() {
+        return bookingService.getAllBookings();
+    }
+
     @GetMapping("/booking")
     public ResponseEntity<List<BookingResponseDTO>> getServiceBookings(@RequestParam("id") Long serviceId){
         return bookingService.getServiceBookings(serviceId);
@@ -71,6 +82,11 @@ public class ServiceProviderController {
     @GetMapping("/booking/service/{id}/pending")
     public ResponseEntity<List<BookingResponseDTO>> getPendingBookings(@PathVariable("id") Long serviceId){
         return bookingService.getPendingBookings(serviceId);
+    }
+
+    @PatchMapping("booking/{id}/status")
+    public ResponseEntity<BookingResponseDTO> updateStatus(@PathVariable("id") Long bookingId, @RequestParam String reason,@RequestParam BookingStatus status){
+        return bookingService.updateStatus(bookingId, reason, status);
     }
 
     @PostMapping("/logout")

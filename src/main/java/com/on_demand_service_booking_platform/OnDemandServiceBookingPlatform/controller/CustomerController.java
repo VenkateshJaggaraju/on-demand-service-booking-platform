@@ -38,6 +38,11 @@ public class CustomerController {
         return customerService.logout(request);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<CustomerResponseDTO>> getAllCustomers(){
+        return customerService.getAllCustomers();
+    }
+
     @PostMapping("/cart")
     public CartItemResponseDTO addToCart(@RequestBody CartRequestDTO dto){
         return customerService.addToCart(dto);

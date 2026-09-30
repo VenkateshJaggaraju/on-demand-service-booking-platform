@@ -103,6 +103,15 @@ public class SecurityConfig {
                         .authenticated()
 
 
+                        .requestMatchers(HttpMethod.PATCH, "/service-provider/booking/{id}/status")
+                        .authenticated()
+
+                        .requestMatchers("/service-provider/all-services")
+                        .authenticated()
+
+                        .requestMatchers("/service-provider/all-bookings")
+                        .authenticated()
+
                         //Role-based api's
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")

@@ -1,11 +1,10 @@
 package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service;
 
 
-
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.*;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.ServiceProvider;
-import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.ServiceMapper;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.entity.Services;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.ServiceMapper;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.mappers.ServiceProviderMapper;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceProviderRepository;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.repository.ServiceRepository;
@@ -13,7 +12,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ServiceProviderService {
@@ -32,8 +34,10 @@ public class ServiceProviderService {
 
     @Autowired
     private ServiceMapper serviceMapper;
+
     @Autowired
     private ServiceProviderMapper serviceProviderMapper;
+
 
     public ServiceResponseDTO addService(ServiceRequestDTO requestDTO) {
         Services service = serviceMapper.toEntity(requestDTO);
@@ -94,5 +98,12 @@ public class ServiceProviderService {
 
     public String logout(HttpServletRequest request) {
         return userService.logout(request);
+    }
+
+    public ResponseEntity<List<ServiceResponseDTO>> getAllServices() {
+        List<ServiceResponseDTO> services = serviceRepository.findAllWithBookingCount();
+        serviceMapper.withDisplayPrice(services);
+
+        return ResponseEntity.ok(services);
     }
 }

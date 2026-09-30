@@ -6,6 +6,8 @@ import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.ent
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface BookingMapper {
 
@@ -32,4 +34,6 @@ public interface BookingMapper {
     @Mapping(target = "serviceName", source = "service.name")
     @Mapping(target = "servicePrice", source = "service.price")
     BookingResponseDTO toResponseDTO(Booking booking);
+
+    List<BookingResponseDTO> toResponseDTOList(List<Booking> bookings);
 }

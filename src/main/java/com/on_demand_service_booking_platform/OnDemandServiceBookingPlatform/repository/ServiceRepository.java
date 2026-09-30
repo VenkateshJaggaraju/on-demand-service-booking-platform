@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface ServiceRepository extends JpaRepository<Services, Long> {
 
     /* Single flexible search: name (partial, case-insensitive), minPrice,
@@ -41,4 +43,16 @@ public interface ServiceRepository extends JpaRepository<Services, Long> {
                                              @Param("maxPrice") Integer maxPrice,
                                              Pageable pageable
     );
+
+
+    @Query("""
+    SELECT new com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.ServiceResponseDTO(
+        s.id, s.name, s.description, s.price, s.icon, s.category, COUNT(b)
+    )
+    FROM Services s
+    LEFT JOIN s.bookings b
+    GROUP BY s.id, s.name, s.description, s.price, s.icon, s.category
+    ORDER BY s.id ASC
+    """)
+    List<ServiceResponseDTO> findAllWithBookingCount();
 }

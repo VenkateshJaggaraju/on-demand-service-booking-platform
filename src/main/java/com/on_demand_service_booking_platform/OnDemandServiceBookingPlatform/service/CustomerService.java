@@ -56,6 +56,15 @@ public class CustomerService {
         return userService.logout(request);
     }
 
+    public ResponseEntity<List<CustomerResponseDTO>> getAllCustomers() {
+        List<CustomerResponseDTO> response = customerRepository.findAll()
+                                                                .stream()
+                                                                .map(customerMapper::toResponseDTO)
+                                                                .toList();
+
+        return ResponseEntity.ok(response);
+    }
+
     public CartItemResponseDTO addToCart(CartRequestDTO dto) {
 
         if(cartRepository.existsByCustomerIdAndServiceId(dto.getCustomerId(), dto.getServiceId())){
