@@ -1,4 +1,8 @@
 
+/* =========================================================
+   Tailwind v4
+   ========================================================= */
+
 @reference "tailwindcss";
 
 /* =========================================================
@@ -6,8 +10,8 @@
    ========================================================= */
 
 .stats-page {
-  @apply min-h-screen mx-auto max-w-[1600px] px-4 py-8 text-slate-800
-         sm:px-6 lg:px-8;
+  @apply min-h-screen mx-auto max-w-[1600px] px-4 py-8
+         text-slate-800 sm:px-6 lg:px-8;
 }
 
 /* =========================================================
@@ -17,8 +21,7 @@
 .stats-header {
   @apply relative mb-7 flex flex-wrap items-center justify-between
          gap-5 overflow-hidden rounded-3xl border border-slate-200
-         bg-white px-6 py-6 shadow-lg
-         sm:px-8;
+         bg-white px-6 py-6 shadow-lg sm:px-8;
 }
 
 .stats-header::before {
@@ -34,8 +37,8 @@
 }
 
 .stats-title {
-  @apply relative z-10 text-2xl font-bold tracking-tight text-slate-900
-         sm:text-3xl;
+  @apply relative z-10 text-2xl font-bold tracking-tight
+         text-slate-900 sm:text-3xl;
 }
 
 .stats-title::after {
@@ -44,14 +47,17 @@
          bg-gradient-to-r from-teal-500 to-cyan-500;
 }
 
+/* =========================================================
+   REFRESH BUTTON
+   ========================================================= */
+
 .stats-refresh {
-  @apply relative z-10 inline-flex items-center gap-2 rounded-xl
-         bg-gradient-to-r from-teal-600 to-cyan-600
+  @apply relative z-10 inline-flex items-center gap-2
+         rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600
          px-5 py-2.5 text-sm font-semibold text-white
          shadow-md transition-all duration-300
          hover:-translate-y-0.5 hover:from-teal-700 hover:to-cyan-700
-         hover:shadow-lg
-         active:translate-y-0
+         hover:shadow-lg active:translate-y-0
          disabled:cursor-not-allowed disabled:opacity-50
          focus-visible:outline-2 focus-visible:outline-offset-2
          focus-visible:outline-teal-600;
@@ -59,7 +65,9 @@
 
 .stats-refresh:disabled::before {
   content: "";
-  @apply size-4 rounded-full border-2 border-white/30 border-t-white;
+  @apply size-4 rounded-full border-2
+         border-white/30 border-t-white;
+
   animation: stats-spin 0.7s linear infinite;
 }
 
@@ -74,9 +82,9 @@
 }
 
 .stats-tab {
-  @apply flex items-center gap-2 whitespace-nowrap rounded-xl
-         px-5 py-2.5 text-sm font-semibold text-slate-500
-         transition-all duration-300
+  @apply flex items-center gap-2 whitespace-nowrap
+         rounded-xl px-5 py-2.5 text-sm font-semibold
+         text-slate-500 transition-all duration-300
          hover:bg-slate-50 hover:text-slate-900
          focus-visible:outline-2 focus-visible:outline-offset-2
          focus-visible:outline-teal-600;
@@ -108,13 +116,14 @@
 
 .stats-scroll {
   @apply max-h-[70vh] overflow-auto rounded-3xl;
+
   animation: stats-reveal 0.35s ease-out;
 
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
 }
 
-/* Chrome / Edge / Safari scrollbar */
+/* Custom scrollbar */
 
 .stats-scroll::-webkit-scrollbar {
   width: 8px;
@@ -204,8 +213,9 @@
 }
 
 .stats-icon {
-  @apply mr-2 inline-flex size-8 items-center justify-center
-         rounded-lg bg-gradient-to-br from-teal-50 to-cyan-50
+  @apply mr-2 inline-flex size-8 items-center
+         justify-center rounded-lg
+         bg-gradient-to-br from-teal-50 to-cyan-50
          text-teal-700 shadow-sm align-middle;
 }
 
@@ -243,28 +253,65 @@
   @apply size-2 rounded-full bg-current;
 }
 
-/* Good */
-
 .stats-badge--good {
   @apply bg-emerald-50 text-emerald-700 ring-emerald-200;
 }
-
-/* Bad */
 
 .stats-badge--bad {
   @apply bg-rose-50 text-rose-700 ring-rose-200;
 }
 
-/* Waiting */
-
 .stats-badge--wait {
   @apply bg-amber-50 text-amber-700 ring-amber-200;
 }
 
-/* None */
-
 .stats-badge--none {
   @apply bg-slate-100 text-slate-600 ring-slate-200;
+}
+
+/* =========================================================
+   BOOKING ACTIONS
+   ========================================================= */
+
+.stats-actions {
+  @apply flex flex-wrap gap-2;
+}
+
+.stats-action {
+  @apply inline-flex items-center justify-center
+         whitespace-nowrap rounded-lg px-3 py-1.5
+         text-xs font-semibold shadow-sm
+         ring-1 ring-inset
+         transition-all duration-200
+         disabled:cursor-not-allowed disabled:opacity-40
+         focus-visible:outline-2 focus-visible:outline-offset-2
+         focus-visible:outline-teal-700;
+}
+
+.stats-action:hover {
+  transform: translateY(-1px);
+}
+
+.stats-action:active {
+  transform: translateY(0);
+}
+
+.stats-action--confirm {
+  @apply bg-emerald-50 text-emerald-700
+         ring-emerald-200
+         hover:bg-emerald-100 hover:shadow-md;
+}
+
+.stats-action--accept {
+  @apply bg-emerald-50 text-emerald-700
+         ring-emerald-200
+         hover:bg-emerald-100 hover:shadow-md;
+}
+
+.stats-action--reject {
+  @apply bg-rose-50 text-rose-700
+         ring-rose-200
+         hover:bg-rose-100 hover:shadow-md;
 }
 
 /* =========================================================
@@ -273,9 +320,10 @@
 
 .stats-empty {
   @apply m-5 rounded-2xl border-2 border-dashed
-         border-slate-200 bg-gradient-to-br
-         from-slate-50 to-white
-         px-6 py-16 text-center text-sm text-slate-500;
+         border-slate-200
+         bg-gradient-to-br from-slate-50 to-white
+         px-6 py-16 text-center
+         text-sm text-slate-500;
 }
 
 .stats-empty::before {
@@ -283,26 +331,23 @@
   @apply mb-4 block text-5xl;
 }
 
-.stats-empty strong {
-  @apply block text-lg font-bold text-slate-800;
-}
-
 /* =========================================================
    ERROR STATE
    ========================================================= */
 
 .stats-error {
-  @apply m-5 flex flex-wrap items-center justify-between
-         gap-4 rounded-2xl border border-rose-200
+  @apply m-5 flex flex-wrap items-center
+         justify-between gap-4 rounded-2xl
+         border border-rose-200
          bg-gradient-to-r from-rose-50 to-red-50
          px-5 py-4 text-sm text-rose-800 shadow-sm;
 }
 
 .stats-error button {
   @apply rounded-xl border border-rose-300
-         bg-white px-4 py-2 font-semibold
-         text-rose-700 shadow-sm
-         transition-all duration-200
+         bg-white px-4 py-2
+         font-semibold text-rose-700
+         shadow-sm transition-all duration-200
          hover:-translate-y-0.5 hover:bg-rose-100
          hover:shadow-md
          focus-visible:outline-2
@@ -311,35 +356,143 @@
 }
 
 /* =========================================================
-   TABLE ROW ANIMATION
+   OVERLAY
    ========================================================= */
 
-.stats-table tbody tr {
-  animation: stats-row-in 0.35s ease both;
-}
-
-.stats-table tbody tr:nth-child(1) {
-  animation-delay: 0.03s;
-}
-
-.stats-table tbody tr:nth-child(2) {
-  animation-delay: 0.06s;
-}
-
-.stats-table tbody tr:nth-child(3) {
-  animation-delay: 0.09s;
-}
-
-.stats-table tbody tr:nth-child(4) {
-  animation-delay: 0.12s;
-}
-
-.stats-table tbody tr:nth-child(5) {
-  animation-delay: 0.15s;
+.stats-overlay {
+  @apply fixed inset-0 z-50 flex items-center
+         justify-center bg-slate-950/50 p-4
+         backdrop-blur-md;
 }
 
 /* =========================================================
-   MOTION
+   DIALOG
+   ========================================================= */
+
+.stats-dialog {
+  @apply w-full max-w-md rounded-3xl
+         border border-slate-200
+         bg-white p-6 shadow-2xl;
+  
+  animation: stats-dialog-in 0.25s ease-out;
+}
+
+.stats-dialog-title {
+  @apply text-xl font-bold text-slate-900;
+}
+
+.stats-dialog-sub {
+  @apply mb-5 mt-1 text-sm leading-6 text-slate-500;
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.stats-field {
+  @apply mb-4 block;
+}
+
+.stats-label {
+  @apply mb-1.5 block text-sm font-semibold text-slate-700;
+}
+
+.stats-input {
+  @apply block w-full rounded-xl
+         border border-slate-300
+         bg-white px-4 py-2.5
+         text-sm text-slate-900
+         shadow-sm
+         placeholder:text-slate-400
+         transition-all duration-200
+         focus:border-teal-500
+         focus:outline-2 focus:outline-offset-0
+         focus:outline-teal-500/20
+         focus:ring-1 focus:ring-teal-500;
+}
+
+.stats-textarea {
+  @apply min-h-28 resize-none;
+}
+
+.stats-input--invalid {
+  @apply border-rose-400
+         focus:border-rose-500
+         focus:outline-rose-500/20
+         focus:ring-rose-500;
+}
+
+.stats-field-foot {
+  @apply mt-1.5 flex justify-between
+         gap-3 text-xs text-slate-400;
+}
+
+.stats-field-error {
+  @apply text-rose-600;
+}
+
+.stats-dialog-error {
+  @apply mb-4 rounded-xl
+         border border-rose-200
+         bg-gradient-to-r from-rose-50 to-red-50
+         px-4 py-3 text-sm text-rose-700;
+}
+
+/* =========================================================
+   DIALOG BUTTONS
+   ========================================================= */
+
+.stats-dialog-actions {
+  @apply mt-6 flex justify-end gap-3;
+}
+
+.stats-btn-secondary,
+.stats-btn-ghost,
+.stats-btn-primary,
+.stats-btn-danger {
+  @apply rounded-xl px-4 py-2.5
+         text-sm font-semibold
+         shadow-sm transition-all duration-200
+         disabled:cursor-not-allowed
+         disabled:opacity-50
+         focus-visible:outline-2
+         focus-visible:outline-offset-2;
+}
+
+.stats-btn-secondary,
+.stats-btn-ghost {
+  @apply border border-slate-300
+         bg-white text-slate-700
+         hover:-translate-y-0.5
+         hover:bg-slate-50
+         hover:shadow-md
+         focus-visible:outline-slate-500;
+}
+
+.stats-btn-primary {
+  @apply bg-gradient-to-r
+         from-teal-600 to-cyan-600
+         text-white
+         hover:-translate-y-0.5
+         hover:from-teal-700
+         hover:to-cyan-700
+         hover:shadow-lg
+         focus-visible:outline-teal-600;
+}
+
+.stats-btn-danger {
+  @apply bg-gradient-to-r
+         from-rose-600 to-red-600
+         text-white
+         hover:-translate-y-0.5
+         hover:from-rose-700
+         hover:to-red-700
+         hover:shadow-lg
+         focus-visible:outline-rose-600;
+}
+
+/* =========================================================
+   ANIMATIONS
    ========================================================= */
 
 @keyframes stats-spin {
@@ -360,15 +513,15 @@
   }
 }
 
-@keyframes stats-row-in {
+@keyframes stats-dialog-in {
   from {
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(15px) scale(0.97);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -377,6 +530,7 @@
    ========================================================= */
 
 @media (max-width: 768px) {
+
   .stats-page {
     @apply px-3 py-5;
   }
@@ -410,6 +564,18 @@
   .stats-table td {
     @apply px-4;
   }
+
+  .stats-actions {
+    @apply flex-col;
+  }
+
+  .stats-action {
+    @apply w-full;
+  }
+
+  .stats-dialog {
+    @apply rounded-2xl p-5;
+  }
 }
 
 /* =========================================================
@@ -417,13 +583,19 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .stats-scroll,
   .stats-refresh:disabled::before,
+  .stats-dialog,
   .stats-table tbody tr {
     animation: none;
   }
 
-  .stats-table tbody tr {
+  .stats-table tbody tr,
+  .stats-action,
+  .stats-btn-primary,
+  .stats-btn-danger,
+  .stats-btn-secondary {
     transform: none;
   }
 }

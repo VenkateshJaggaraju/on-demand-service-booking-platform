@@ -1,10 +1,25 @@
 import { useCallback, useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import axios from "axios";
 import "./ServiceProviderStats.css";
 
 const BASE_URL = "http://localhost:1086";
 
 type TabKey = "services" | "customers" | "bookings";
+
+// Must match the BookingStatus enum on the backend exactly.
+const STATUSES = [
+  "PENDING",
+  "CONFIRMED",
+  "REJECTED",
+  "CANCELLED",
+  "IN_PROGRESS",
+  "COMPLETED",
+] as const;
+type BookingStatus = (typeof STATUSES)[number];
+
+const REASON_MIN = 5;
+const REASON_MAX = 255;
 
 interface ServiceRow {
   id: number;
@@ -40,7 +55,7 @@ interface BookingRow {
   address: string | null;
   totalAmount: number | null;
   reason: string | null;
-  status: string | null;
+  status: BookingStatus | null;
 }
 
 type TabData = {
@@ -58,6 +73,8 @@ const TABS: { key: TabKey; label: string; path: string }[] = [
 const rupees = (n: number | null | undefined) =>
   n == null ? "—" : `₹${n.toLocaleString("en-IN")}`;
 
+const statusLabel = (s: string) => s.replace("_", " ");
+
 // Change the key if you store your JWT under a different name.
 const authHeaders = () => {
   const token = localStorage.getItem("token");
@@ -68,10 +85,22 @@ const describeError = (err: unknown) => {
   if (axios.isAxiosError(err)) {
     if (!err.response) return "Unable to connect to the server on localhost:1086.";
     if (err.response.status === 401 || err.response.status === 403)
-      return "Access denied. Log in with an account that can view this data.";
+      return "Access denied. Log in with an account that can do this.";
+    if (err.response.status === 400) return "The server rejected these details. Check them and try again.";
+    if (err.response.status === 404) return "This booking no longer exists. Refresh the list.";
     return `Request failed (${err.response.status}). Try again.`;
   }
   return "Something went wrong. Try again.";
+};
+
+// A reason must be real text: 5 to 255 characters and contain actual words.
+const validateReason = (raw: string) => {
+  const reason = raw.trim();
+  if (!reason) return "Enter a reason.";
+  if (reason.length < REASON_MIN) return `Use at least ${REASON_MIN} characters.`;
+  if (reason.length > REASON_MAX) return `Keep it under ${REASON_MAX} characters.`;
+  if (!/\p{L}{2,}/u.test(reason)) return "Write the reason in words.";
+  return "";
 };
 
 function Empty({ label }: { label: string }) {
@@ -154,13 +183,18 @@ function CustomersTable({ rows }: { rows: CustomerRow[] }) {
 
 function statusClass(status: string | null) {
   const s = (status ?? "").toUpperCase();
-  if (["CONFIRMED", "ACCEPTED", "COMPLETED", "PAID"].includes(s)) return "stats-badge--good";
-  if (["REJECTED", "CANCELLED", "FAILED"].includes(s)) return "stats-badge--bad";
+  if (["CONFIRMED", "COMPLETED"].includes(s)) return "stats-badge--good";
+  if (["REJECTED", "CANCELLED"].includes(s)) return "stats-badge--bad";
   if (s) return "stats-badge--wait";
   return "stats-badge--none";
 }
 
-function BookingsTable({ rows }: { rows: BookingRow[] }) {
+interface BookingsTableProps {
+  rows: BookingRow[];
+  onEdit: (booking: BookingRow, status: BookingStatus) => void;
+}
+
+function BookingsTable({ rows, onEdit }: BookingsTableProps) {
   if (!rows.length) return <Empty label="bookings" />;
   return (
     <table className="stats-table">
@@ -175,6 +209,7 @@ function BookingsTable({ rows }: { rows: BookingRow[] }) {
           <th className="num">Total</th>
           <th>Status</th>
           <th>Reason</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -196,10 +231,28 @@ function BookingsTable({ rows }: { rows: BookingRow[] }) {
             <td className="num">{rupees(b.totalAmount)}</td>
             <td>
               <span className={`stats-badge ${statusClass(b.status)}`}>
-                {b.status ?? "Pending"}
+                {b.status ? statusLabel(b.status) : "Pending"}
               </span>
             </td>
             <td className="wide">{b.reason ?? "—"}</td>
+            <td>
+              <div className="stats-actions">
+                <button
+                  type="button"
+                  className="stats-action stats-action--confirm"
+                  onClick={() => onEdit(b, "CONFIRMED")}
+                >
+                  Confirm
+                </button>
+                <button
+                  type="button"
+                  className="stats-action stats-action--reject"
+                  onClick={() => onEdit(b, "REJECTED")}
+                >
+                  Reject
+                </button>
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -207,11 +260,132 @@ function BookingsTable({ rows }: { rows: BookingRow[] }) {
   );
 }
 
-export const ServiceProviderStats=()=> {
+interface UpdateDialogProps {
+  booking: BookingRow;
+  initialStatus: BookingStatus;
+  onClose: () => void;
+  onSaved: (updated: BookingRow) => void;
+}
+
+// PATCH /service-provider/booking/{id}/status?status=...&reason=...
+function UpdateStatusDialog({ booking, initialStatus, onClose, onSaved }: UpdateDialogProps) {
+  const [status, setStatus] = useState<BookingStatus>(initialStatus);
+  const [reason, setReason] = useState("");
+  const [touched, setTouched] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [serverError, setServerError] = useState("");
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !saving) onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose, saving]);
+
+  const reasonError = validateReason(reason);
+  const showError = touched && reasonError;
+
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
+    setTouched(true);
+    if (reasonError) return;
+
+    setSaving(true);
+    setServerError("");
+    try {
+      const res = await axios.patch<BookingRow>(
+        `${BASE_URL}/service-provider/booking/${booking.id}/status`,
+        null,
+        { params: { status, reason: reason.trim() }, headers: authHeaders() }
+      );
+      onSaved(res.data);
+    } catch (err) {
+      setServerError(describeError(err));
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="stats-overlay" onMouseDown={(e) => e.target === e.currentTarget && !saving && onClose()}>
+      <form
+        className="stats-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="stats-dialog-title"
+        onSubmit={submit}
+        noValidate
+      >
+        <h2 id="stats-dialog-title" className="stats-dialog-title">
+          Update booking #{booking.id}
+        </h2>
+        <p className="stats-dialog-sub">
+          {booking.serviceName} for {booking.customerName}
+        </p>
+
+        <label className="stats-field">
+          <span className="stats-label">Status</span>
+          <select
+            className="stats-input"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as BookingStatus)}
+          >
+            {STATUSES.map((s) => (
+              <option key={s} value={s}>
+                {statusLabel(s)}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="stats-field">
+          <span className="stats-label">Reason</span>
+          <textarea
+            className={`stats-input stats-textarea ${showError ? "stats-input--invalid" : ""}`}
+            rows={3}
+            maxLength={REASON_MAX}
+            value={reason}
+            placeholder="Why is the status changing?"
+            aria-invalid={!!showError}
+            onChange={(e) => setReason(e.target.value)}
+            onBlur={() => setTouched(true)}
+            autoFocus
+          />
+          <span className="stats-field-foot">
+            <span className={showError ? "stats-field-error" : ""}>{showError || " "}</span>
+            <span>
+              {reason.trim().length}/{REASON_MAX}
+            </span>
+          </span>
+        </label>
+
+        {serverError && (
+          <p className="stats-dialog-error" role="alert">
+            {serverError}
+          </p>
+        )}
+
+        <div className="stats-dialog-actions">
+          <button type="button" className="stats-btn-secondary" onClick={onClose} disabled={saving}>
+            Cancel
+          </button>
+          <button type="submit" className="stats-btn-primary" disabled={saving}>
+            {saving ? "Saving…" : "Save changes"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export const ServiceProviderStats = () => {
   const [tab, setTab] = useState<TabKey>("services");
   const [data, setData] = useState<Partial<TabData>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [editing, setEditing] = useState<{ booking: BookingRow; status: BookingStatus } | null>(
+    null
+  );
 
   const load = useCallback(async (key: TabKey) => {
     const { path } = TABS.find((t) => t.key === key)!;
@@ -232,6 +406,14 @@ export const ServiceProviderStats=()=> {
     if (data[tab] === undefined) load(tab);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab, load]);
+
+  const handleSaved = (updated: BookingRow) => {
+    setData((prev) => ({
+      ...prev,
+      bookings: prev.bookings?.map((b) => (b.id === updated.id ? { ...b, ...updated } : b)),
+    }));
+    setEditing(null);
+  };
 
   const rows = data[tab];
 
@@ -283,10 +465,30 @@ export const ServiceProviderStats=()=> {
           <div className="stats-scroll">
             {tab === "services" && <ServicesTable rows={data.services!} />}
             {tab === "customers" && <CustomersTable rows={data.customers!} />}
-            {tab === "bookings" && <BookingsTable rows={data.bookings!} />}
+            {tab === "bookings" && (
+              <BookingsTable
+                rows={data.bookings!}
+                onEdit={(booking, status) => setEditing({ booking, status })}
+              />
+            )}
           </div>
         )}
       </section>
+
+      {editing && (
+        <UpdateStatusDialog
+          booking={editing.booking}
+          initialStatus={editing.status}
+          onClose={() => setEditing(null)}
+          onSaved={handleSaved}
+        />
+      )}
+      <button
+          className="back-home-button"
+          onClick={() => navigate("/")}
+        >
+          Back to Home
+        </button>
     </div>
   );
-}
+};
