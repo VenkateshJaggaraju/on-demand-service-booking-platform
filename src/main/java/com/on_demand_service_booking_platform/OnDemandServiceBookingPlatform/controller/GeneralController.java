@@ -17,12 +17,10 @@ public class GeneralController {
     }
 
 }
-/* Note:
+/*
+ * Note:
  * The following apis are specifically dedicated to Postman;
  * Rest of all other apis works in both Browser and Postman
- *
- * If ServiceProvider wants to see customers
- * then both Customer(login in new tab) and ServiceProvider have logins (if the app is running on localhost)
  *
  * Postman(user) endpoints
  *
@@ -33,8 +31,26 @@ public class GeneralController {
  *
  *      /service-provider/booking
  *      /service-provider/booking/service/{id}/pending
- *      /service-provider/booking/{id}/status
  *
+ */
+
+/*
+ * Key takeaways:
  *
+ * 1. Only one user can access this application at a time, if the app is running on localhost
  *
+ * 2. If ServiceProvider wants to see customers
+ *    then both Customer(login in new tab) and ServiceProvider have logins (if the app is running on localhost)
+ *
+ * 3. cause of OptimisticLockException
+ *
+ *    userA's(eg., ServiceProvider A) request loads booking 5 (version 0)
+ *    userB's(eg., ServiceProvider B) request loads booking 5 (version 0)
+ *
+ *    userA commits: UPDATE ... SET status='CONFIRMED', version=1 WHERE id=5 AND version=0 succeeds
+ *    userB tries: UPDATE ... SET status='REJECTED', version=1 WHERE id=5 AND version=0 matches 0 rows,
+ *                 so Hibernate throws the exception and userB's transaction rolls back
+ *
+ *    Final state: CONFIRMED with userA's reason. userB's change is never saved,
+ *                 and userB gets the 409 from your exception handler.
  */

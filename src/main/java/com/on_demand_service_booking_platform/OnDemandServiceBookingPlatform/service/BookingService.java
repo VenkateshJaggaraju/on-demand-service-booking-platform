@@ -50,10 +50,13 @@ public class BookingService {
         LocalDate bookingDate = LocalDate.now();
         LocalTime bookingTime= LocalTime.now();
 
+
+        // restriction "only one customer can book the service per day"
+        // If you want "one active booking per service, regardless of date," use this method without the date,
         boolean alreadyBooked = bookingRepository.existsByServiceIdAndBookingDateAndStatusIn(
                 service.getId(),
                 bookingDate,
-                List.of(BookingStatus.PENDING, BookingStatus.CONFIRMED)   // use your enum's actual values
+                List.of(BookingStatus.PENDING, BookingStatus.CONFIRMED)
         );
 
         if(alreadyBooked){

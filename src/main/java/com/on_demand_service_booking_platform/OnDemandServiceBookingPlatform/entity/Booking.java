@@ -48,5 +48,3 @@ public class Booking {
     @Column(nullable = false)
     private Long version;// Optimistic locking strategy
 }
-
-// restriction only one user can book the service (at available time)
