@@ -114,7 +114,7 @@ Customer  1 ─────────── N  Booking  N ──────�
 The backend uses:
 
 * Spring Security
-* JWT authentication
+* JWT Authentication
 * BCrypt password hashing
 * Role-based authorization
 * Stateless authentication
