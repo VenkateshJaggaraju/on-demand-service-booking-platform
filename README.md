@@ -13,7 +13,7 @@ A full-stack **On-Demand Service Booking Platform** that connects customers with
 * JWT Authentication
 * REST APIs
 * PostgreSQL
-* Hibernate
+* Hibernate ORM
 * Maven
 
 ### Frontend
