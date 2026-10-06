@@ -1,5 +1,6 @@
     import axios from "axios";
 
+    // Empty on purpose: axios.defaults.baseURL (set in AxiosSetup.ts) supplies the host.
     const AUTH_API_BASE_URL = "";
 
     export interface AuthValidation {

@@ -24,6 +24,7 @@ interface ServicePage {
   last: boolean;
 }
 
+// Empty on purpose: axios.defaults.baseURL (set in AxiosSetup.ts) supplies the host.
 const API_BASE_URL = "";
 
 export const Services: React.FC = () => {

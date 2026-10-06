@@ -4,6 +4,7 @@ import axios from "axios";
 import "./ServiceProviderStats.css";
 import { useNavigate } from "react-router-dom";
 
+// Empty on purpose: axios.defaults.baseURL (set in AxiosSetup.ts) supplies the host.
 const BASE_URL = "";
 
 type TabKey = "services" | "customers" | "bookings";
@@ -89,7 +90,7 @@ const authHeaders = () => {
 
 const describeError = (err: unknown) => {
   if (axios.isAxiosError(err)) {
-    if (!err.response) return "Unable to connect to the server on localhost:1086.";
+    if (!err.response) return "Unable to connect to the server.";
     if (err.response.status === 401 || err.response.status === 403)
       return "Access denied. Log in with an account that can do this.";
     if (err.response.status === 400) return "The server rejected these details. Check them and try again.";
