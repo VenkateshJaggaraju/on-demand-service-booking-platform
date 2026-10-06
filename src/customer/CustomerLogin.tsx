@@ -19,7 +19,7 @@
         setLoading(true);
 
         try {
-        const response = await axios.post("http://localhost:1086/customer/login", {
+        const response = await axios.post("/customer/login", {
             username,
             password,
         });

@@ -19,7 +19,7 @@
 
         try {
             const response = await axios.post(
-                "http://localhost:1086/admin/login",
+                "/admin/login",
                 {
                 username: username,
                 password: password,

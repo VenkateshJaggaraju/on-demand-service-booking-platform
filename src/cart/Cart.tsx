@@ -19,7 +19,7 @@ interface CartItem {
   service: ServiceResponseDTO;
 }
 
-const API_BASE_URL = "http://localhost:1086/customer";
+const API_BASE_URL = "/customer";
 
 // TODO: Replace with JWT-based authentication
 const getCustomerId = (): number => {

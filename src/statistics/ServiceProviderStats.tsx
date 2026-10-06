@@ -4,7 +4,7 @@ import axios from "axios";
 import "./ServiceProviderStats.css";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "http://localhost:1086";
+const BASE_URL = "";
 
 type TabKey = "services" | "customers" | "bookings";
 

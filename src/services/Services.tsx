@@ -24,7 +24,7 @@ interface ServicePage {
   last: boolean;
 }
 
-const API_BASE_URL = "http://localhost:1086";
+const API_BASE_URL = "";
 
 export const Services: React.FC = () => {
 

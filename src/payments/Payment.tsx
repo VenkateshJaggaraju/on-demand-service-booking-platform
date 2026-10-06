@@ -39,7 +39,7 @@ export const Payment: React.FC<PaymentProps> = ({
        */
 
       const response = await axios.post(
-        "http://localhost:1086/customer/payments/create-checkout-session",
+        "/customer/payments/create-checkout-session",
         {
           bookingId: bookingId,
           amount: amount,

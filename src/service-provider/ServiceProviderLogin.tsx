@@ -21,7 +21,7 @@ export const ServiceProviderLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:1086/service-provider/login",
+        "/service-provider/login",
         {
           username,
           password,

@@ -24,7 +24,7 @@ import axios from "axios";
         setLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:1086/customer/register", {
+            const response = await axios.post("/customer/register", {
                 username,
                 password,
                 mobileNumber: Number(mobileNumber),

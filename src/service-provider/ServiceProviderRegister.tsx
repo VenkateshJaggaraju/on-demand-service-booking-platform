@@ -25,7 +25,7 @@
 
         try {
         const response = await axios.post(
-            "http://localhost:1086/service-provider/register",
+            "/service-provider/register",
             {
             username,
             password,

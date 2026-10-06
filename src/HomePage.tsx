@@ -316,7 +316,7 @@ export const HomePage: React.FC = () => {
   const handleLogout = async () => {
     try {
       // the axios interceptor attaches the token, so call the server first
-      await axios.post("http://localhost:1086/customer/logout");
+      await axios.post("/customer/logout");
     } catch (err) {
       console.error("Logout request failed:", err);
     } finally {

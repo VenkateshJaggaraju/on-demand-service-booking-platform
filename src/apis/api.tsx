@@ -1,7 +1,7 @@
 import axios from "axios";
  
 export const api = axios.create({
-  baseURL: "http://localhost:1086",
+  baseURL: "",
 });
  
 // Attach the JWT (stored by ServiceProviderLogin, CustomerLogin, etc.)
