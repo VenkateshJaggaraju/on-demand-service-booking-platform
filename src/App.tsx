@@ -103,7 +103,13 @@ const router = createBrowserRouter([
     path: "/payment/:bookingId",
     element: (
       <PrivateRoute role="CUSTOMER">
-        <Payment />
+        <>
+          <Payment
+            bookingId={0}
+            amount={0}
+            serviceName={""}
+          />
+        </>
       </PrivateRoute>
     ),
   },
@@ -120,5 +126,3 @@ function App() {
 }
 
 export default App;
-/*
-*/
