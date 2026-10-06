@@ -257,6 +257,46 @@ Public endpoints such as registration, login, and public service browsing can be
  * ============================================================
  */
 
+
+## 🚀 Live Deployment
+
+| 🧩 Component | ☁️ Platform | 🔗 Live URL |
+|---|---|---|
+| 🎨 **Frontend** | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) | [🌐 Open Frontend](https://on-demand-service-booking-platform-iota.vercel.app/) |
+| ⚙️ **Backend** | ![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black) | [🚀 Open Backend](https://on-demand-service-booking-platform-umkq.onrender.com) |
+| 🗄️ **Database** | ![Neon](https://img.shields.io/badge/Neon-00E5FF?style=for-the-badge&logo=postgresql&logoColor=white) | **PostgreSQL on Neon** |
+
+### 🌐 Application Architecture
+
+```text
+┌──────────────────────────────────────────────────────────────┐
+│                  ON-DEMAND SERVICE PLATFORM                  │
+└──────────────────────────────────────────────────────────────┘
+
+             👤 Customer / Service Provider
+                         │
+                         ▼
+        ┌─────────────────────────────────┐
+        │       🎨 React + TypeScript     │
+        │             Vercel              │
+        └─────────────────────────────────┘
+                         │
+                         │ HTTPS / REST API
+                         ▼
+        ┌─────────────────────────────────┐
+        │       ⚙️ Spring Boot API        │
+        │             Render              │
+        └─────────────────────────────────┘
+                         │
+                         │ JDBC / PostgreSQL
+                         ▼
+        ┌─────────────────────────────────┐
+        │        🗄️ PostgreSQL            │
+        │             Neon                │
+        └─────────────────────────────────┘
+
+
+
 ## 👨‍💻 Author
 
 **Venkatesh**
