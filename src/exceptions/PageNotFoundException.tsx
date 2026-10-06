@@ -1,8 +1,7 @@
-import { Link, useNavigate, useRouteError, isRouteErrorResponse } from "react-router-dom";
+import { Link, useRouteError, isRouteErrorResponse } from "react-router-dom";
 import "./PageNotFoundException.css";
 
 export const PageNotFoundException = () => {
-  const navigate = useNavigate();
   const error = useRouteError();
 
   // No error object means it was rendered by a catch-all "*" route

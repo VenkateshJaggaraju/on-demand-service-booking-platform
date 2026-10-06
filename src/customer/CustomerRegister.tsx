@@ -10,7 +10,7 @@ import axios from "axios";
     const [password, setPassword] = useState("");
     const [mobileNumber, setMobileNumber] = useState("");
     const [email, setEmail] = useState("");
-    const [profile, setProfile] = useState<File | null>(null);
+    const [, setProfile] = useState<File | null>(null);
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
