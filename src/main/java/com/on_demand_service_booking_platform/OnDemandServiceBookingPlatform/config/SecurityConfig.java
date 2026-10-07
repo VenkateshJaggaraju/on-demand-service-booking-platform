@@ -159,7 +159,7 @@ public class SecurityConfig {
 
         config.setAllowedOrigins(List.of(
                 "http://localhost:5173",
-                "https://on-demand-service-booking-platform-eight.vercel.app/"
+                "https://on-demand-service-booking-platform-iota.vercel.app"
         ));
 
         config.setAllowedMethods(List.of(
