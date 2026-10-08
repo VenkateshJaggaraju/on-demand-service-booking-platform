@@ -19,15 +19,16 @@ export const AxiosSetup = () => {
   });
 };
 
-//  default-baseURL
+//  default_baseURL
 // "http://localhost:1086"
 
 //           +
 
-//  request URL
+//  request_URL
 //  "/customer/cart"
 
 //           ↓
 
 //  axios calls
-//  "http://localhost:1086/customer/cart"
+//  default_baseURL + request_URL
+//  i.e., "http://localhost:1086/customer/cart"
