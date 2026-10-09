@@ -26,8 +26,8 @@ public class GeneralController {
 }
 /*
  * Note:
- * The following apis are specifically dedicated to Postman;
- * Rest of all other apis works in both Browser and Postman
+ * The following APIs are specifically dedicated to Postman;
+ * Rest of all other APIs works in both Browser and Postman
  *
  * Postman(user) endpoints
  *
