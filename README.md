@@ -34,7 +34,7 @@ A full-stack **On-Demand Service Booking Platform** that connects customers with
 * JWT-based authentication
 * Browse available services
 * Select service provider
-* Book services within available time slots
+* Book services within the available time slots
 * Cancel bookings
 * View booking history
 * Give ratings and reviews
