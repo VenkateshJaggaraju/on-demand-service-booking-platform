@@ -1,6 +1,6 @@
 # On-Demand Service Booking Platform
 
-A full-stack **On-Demand Service Booking Platform** that connects customers with service providers. Customers can browse and book services, service providers can manage their services and bookings, and administrators can manage the overall platform.
+A full-stack **On-Demand Service Booking Platform** that connects customers with service providers. Customers can browse and book services, service providers can manage their services & bookings, and administrators can manage the overall platform.
 
 ## 🚀 Tech Stack
 
