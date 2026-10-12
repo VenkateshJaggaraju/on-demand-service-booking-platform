@@ -144,7 +144,7 @@ Public endpoints such as registration, login, and public service browsing can be
                          │    Admin     │
                          └──────┬───────┘
                                 │
-                    Manage Platform
+                          Manage Platform
                                 │
                                 ▼
 ┌──────────────┐        ┌───────────────┐        ┌──────────────────┐
