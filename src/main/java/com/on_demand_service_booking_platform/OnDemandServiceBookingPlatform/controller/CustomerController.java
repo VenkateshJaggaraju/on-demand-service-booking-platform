@@ -3,6 +3,7 @@ package com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.co
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.dto.*;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.BookingService;
 import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.CustomerService;
+import com.on_demand_service_booking_platform.OnDemandServiceBookingPlatform.service.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class CustomerController {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     //    @PostMapping(value = "/register", consumes = "multipart/form-data")
     @PostMapping(value = "/register")
@@ -76,9 +80,14 @@ public class CustomerController {
         return bookingService.getCustomerBooking(bookingId, authentication);
     }
 
+    @PostMapping("/payments")
+    public ResponseEntity<PaymentResponseDTO> makePayment(@RequestBody PaymentRequestDTO request, Authentication authentication){
+        return paymentService.pay(request, authentication);
+    }
+
     @GetMapping("/payments")
-    public String payment(){
-        return "payment api";
+    public ResponseEntity<List<PaymentResponseDTO>> getMyPayments(Authentication authentication) {
+        return paymentService.myPayments(authentication);
     }
 
     @GetMapping("/services")

@@ -69,8 +69,12 @@ public class SecurityConfig {
                         ).permitAll()
 
                         //U should've Login for this api; (i.e., jwtToken) required
-                        .requestMatchers("/customer/payments")
+                        .requestMatchers(HttpMethod.POST,"/customer/payments")
                         .authenticated()
+
+                        .requestMatchers(HttpMethod.GET,"/customer/payments")
+                        .authenticated()
+
 
                         //Logout(jwtToken) required
                         .requestMatchers("/customer/logout")
