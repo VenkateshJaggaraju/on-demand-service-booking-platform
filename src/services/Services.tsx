@@ -635,7 +635,7 @@ export const Services: React.FC = () => {
 
                       {/* BOOK NOW */}
 
-                      <Link to="/payment" state={{ service }}>
+                      <Link to="/customer/payments" state={{ service }}>
                         <button
                           onClick={() =>
                             handleBookNow(service)

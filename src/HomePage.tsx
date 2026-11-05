@@ -285,10 +285,10 @@ export const HomePage: React.FC = () => {
     }
 
     if (loggedIn) {
-      navigate("/payment", { state: { serviceId: service.id } });
+      navigate("/customer/payments", { state: { serviceId: service.id } });
     } else {
       navigate("/customer/login", {
-        state: { redirectTo: "/payment", serviceId: service.id },
+        state: { redirectTo: "/customer/payments", serviceId: service.id },
       });
     }
   };

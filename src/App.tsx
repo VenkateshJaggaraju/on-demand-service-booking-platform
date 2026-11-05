@@ -100,16 +100,19 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/payment/:bookingId",
+    path: "/customer/payments",
     element: (
       <PrivateRoute role="CUSTOMER">
-        <>
-          <Payment
-            bookingId={0}
-            amount={0}
-            serviceName={""}
-          />
-        </>
+        <Payment />
+      </PrivateRoute>
+    ),
+  },
+
+  {
+    path: "/customer/payments/:bookingId",
+    element: (
+      <PrivateRoute role="CUSTOMER">
+        <Payment />
       </PrivateRoute>
     ),
   },
