@@ -85,7 +85,9 @@ public class ServiceProviderController {
     }
 
     @PatchMapping("booking/{id}/status")
-    public ResponseEntity<BookingResponseDTO> updateStatus(@PathVariable("id") Long bookingId, @RequestParam String reason,@RequestParam BookingStatus status){
+    public ResponseEntity<BookingResponseDTO> updateStatus(@PathVariable("id") Long bookingId,
+                                                           @RequestParam String reason,
+                                                           @RequestParam BookingStatus status){
         return bookingService.updateStatus(bookingId, reason, status);
     }
 

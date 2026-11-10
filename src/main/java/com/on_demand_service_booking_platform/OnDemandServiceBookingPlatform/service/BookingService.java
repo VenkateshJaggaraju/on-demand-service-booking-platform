@@ -36,7 +36,8 @@ public class BookingService {
     private BookingMapper bookingMapper;
 
     @Transactional
-    public ResponseEntity<BookingResponseDTO> createBooking(BookingRequestDTO request, Authentication authentication) {
+    public ResponseEntity<BookingResponseDTO> createBooking(BookingRequestDTO request,
+                                                            Authentication authentication) {
 
         Long customerId=getCustomerId(authentication);
 
@@ -95,7 +96,8 @@ public class BookingService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<BookingResponseDTO> getCustomerBooking(Long bookingId, Authentication authentication) {
+    public ResponseEntity<BookingResponseDTO> getCustomerBooking(Long bookingId,
+                                                                 Authentication authentication) {
         Long customerId=getCustomerId(authentication);
 
         Booking booking=bookingRepository.findById(bookingId)
@@ -121,16 +123,18 @@ public class BookingService {
     }
 
     public ResponseEntity<List<BookingResponseDTO>> getPendingBookings(Long serviceId) {
-        List<BookingResponseDTO> response = bookingRepository.findByServiceIdAndStatus(serviceId, BookingStatus.PENDING)
-                .stream()
-                .map(bookingMapper::toResponseDTO)
-                .toList();
+        List<BookingResponseDTO> response = bookingRepository.findByServiceIdAndStatus(serviceId,
+                        BookingStatus.PENDING)
+                        .stream()
+                        .map(bookingMapper::toResponseDTO)
+                        .toList();
 
         return ResponseEntity.ok(response);
     }
 
     @Transactional
-    public ResponseEntity<BookingResponseDTO> updateStatus(Long bookingId, String reason, BookingStatus status) {
+    public ResponseEntity<BookingResponseDTO> updateStatus(Long bookingId, String reason,
+                                                           BookingStatus status) {
         Booking booking=bookingRepository.findById(bookingId)
                 .orElseThrow(()-> new RuntimeException("Booking not found"));
 
@@ -144,6 +148,11 @@ public class BookingService {
 
     private Long getCustomerId(Authentication authentication) {
         Customer customer=customerRepository.findByUsername(authentication.getName());
+
+        if(customer == null){
+            throw new RuntimeException("Customer not found");
+        }
+
         return customer.getId();
     }
 

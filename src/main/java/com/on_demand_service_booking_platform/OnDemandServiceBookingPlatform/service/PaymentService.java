@@ -86,7 +86,9 @@ public class PaymentService {
             throw new RuntimeException("Customer not found");
         }
 
-        List<PaymentResponseDTO> response = paymentMapper.toResponseList(paymentRepository.findByCustomerId(customer.getId()));
+        List<PaymentResponseDTO> response = paymentMapper.toResponseList(
+                paymentRepository.findByCustomerId(customer.getId())
+        );
 
         return ResponseEntity.ok(response);
     }

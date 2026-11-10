@@ -16,11 +16,11 @@ public interface CartMapper {
     @Mapping(target = "service", ignore = true)   // set manually in the service layer
     Cart toEntity(CartRequestDTO dto);
 
-    @Mapping(source = "id", target = "cartItemId")
+    @Mapping(target = "cartItemId", source = "id")
     CartItemResponseDTO toResponseDTO(Cart cart);
 
     // MapStruct uses this automatically for Cart.service -> CartItemResponseDTO.service
-    @Mapping(source = "price", target = "actualPrice")
+    @Mapping(target = "actualPrice", source = "price")
     @Mapping(target = "displayPrice",
             expression = "java(service.getPrice() == null ? \"₹0\" : \"₹\" + (service.getPrice() + 500))")
     @Mapping(target = "bookingCount", ignore = true)

@@ -30,11 +30,13 @@ public class AuthService {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (jwtService.validateToken(token, userDetails)) {
+
                 String role = userDetails
                         .getAuthorities()
                         .iterator()
                         .next()
                         .getAuthority();
+
                 return ResponseEntity.ok(Map.of(
                         "valid", true,
                         "username", username,
@@ -47,6 +49,7 @@ public class AuthService {
                     .body(Map.of("valid", false));
 
         } catch (Exception e) {
+
             return ResponseEntity
                     .status(401)
                     .body(Map.of("valid", false));

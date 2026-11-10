@@ -58,12 +58,14 @@ public class CustomerController {
     }
 
     @DeleteMapping("/cart/{id}")// Cart.id
-    public CartItemResponseDTO removeFromCart(@PathVariable("id") Long cartItemId, @RequestParam Long customerId){
+    public CartItemResponseDTO removeFromCart(@PathVariable("id") Long cartItemId,
+                                              @RequestParam Long customerId){
         return customerService.removeFromCart(cartItemId, customerId);
     }
 
     @PostMapping("/booking")
-    public ResponseEntity<BookingResponseDTO> createBooking(@RequestBody BookingRequestDTO request, Authentication authentication){
+    public ResponseEntity<BookingResponseDTO> createBooking(@RequestBody BookingRequestDTO request,
+                                                            Authentication authentication){
 //        Authentication gives the currently loginned user
         return bookingService.createBooking(request, authentication);
     }
@@ -76,12 +78,14 @@ public class CustomerController {
     // Booknow(customerController) [BookingStatus=null] --> Payment(SericeProviderController) [BookingStatus=actual]
 
     @GetMapping("booking/{id}")
-    public ResponseEntity<BookingResponseDTO> getCustomerBooking(@PathVariable("id") Long bookingId, Authentication authentication){
+    public ResponseEntity<BookingResponseDTO> getCustomerBooking(@PathVariable("id") Long bookingId,
+                                                                 Authentication authentication){
         return bookingService.getCustomerBooking(bookingId, authentication);
     }
 
     @PostMapping("/payments")
-    public ResponseEntity<PaymentResponseDTO> makePayment(@RequestBody PaymentRequestDTO request, Authentication authentication){
+    public ResponseEntity<PaymentResponseDTO> makePayment(@RequestBody PaymentRequestDTO request,
+                                                          Authentication authentication){
         return paymentService.pay(request, authentication);
     }
 

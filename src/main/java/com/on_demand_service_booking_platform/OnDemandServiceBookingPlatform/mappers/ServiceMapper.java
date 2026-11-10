@@ -27,14 +27,14 @@ public interface ServiceMapper {
 
     // Still useful for a single-entity path, e.g. right after saving one
     // Services row where you already have it in hand.
-    @Mapping(source = "service.id", target = "id")
-    @Mapping(source = "service.name", target = "name")
-    @Mapping(source = "service.description", target = "description")
-    @Mapping(source = "service.price", target = "actualPrice")
-    @Mapping(source = "service.price", target = "displayPrice", qualifiedByName = "formatPrice")
-    @Mapping(source = "service.icon", target = "icon")
-    @Mapping(source = "service.category", target = "category")
-    @Mapping(source = "bookingCount", target = "bookingCount")
+    @Mapping(target = "id", source = "service.id")
+    @Mapping(target = "name", source = "service.name")
+    @Mapping(target = "description", source = "service.description")
+    @Mapping(target = "actualPrice", source = "service.price")
+    @Mapping(target = "displayPrice", source = "service.price", qualifiedByName = "formatPrice")
+    @Mapping(target = "icon", source = "service.icon")
+    @Mapping(target = "category", source = "service.category")
+    @Mapping(target = "bookingCount", source = "bookingCount")
     ServiceResponseDTO mapServiceToDTO(Services service, long bookingCount);
 
     // Fills in displayPrice for rows that came from the JPQL projection,
